@@ -128,10 +128,9 @@ main {
   border-radius: 21px;
   background: #fff;
   box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
-  width: 380px;
 }
 .card .card-wrapper {
-  padding: 32px 25px 61px;
+  margin: 32px 25px 61px;
 }
 .card .card-title {
   color: var(--Grey, #7a7a7a);
@@ -152,8 +151,10 @@ main {
   font-weight: 400;
   line-height: normal;
   margin-bottom: 32px;
+  height: 76px;
+  overflow: hidden;
 }
-.card .card-grid h4 {
+.card .d-flex h4 {
   color: var(--Black, #1b1b1b);
   font-family: Manrope;
   font-size: 14px;
@@ -161,7 +162,7 @@ main {
   font-weight: 500;
   line-height: normal;
 }
-.card .card-grid p {
+.card .d-flex p {
   color: var(--Grey, #7a7a7a);
   font-family: Manrope;
   font-size: 14px;
@@ -173,6 +174,14 @@ main {
   border-radius: 21px 21px 0 0;
   max-height: 253px;
   object-fit: cover;
+}
+
+.card .d-flex .row {
+  width: 150px; /* Espace entre les colonnes */
+}
+.card .ingredients {
+  height: 170px;
+  overflow: hidden;
 }
 
 .custom-search-bar {

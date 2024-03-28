@@ -2,9 +2,9 @@
   border-radius: 21px;
   background: #fff;
   box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
-  width: 380px;
+  // width: 380px;
   .card-wrapper{
-    padding: 32px 25px 61px;
+    margin: 32px 25px 61px;
   }
   .card-title {
     color: var(--Grey, #7a7a7a);
@@ -25,8 +25,10 @@
     font-weight: 400;
     line-height: normal;
     margin-bottom: 32px;
+    height: 76px;
+    overflow: hidden;
   }
-  .card-grid {
+  .d-flex {
     h4 {
       color: var(--Black, #1b1b1b);
       font-family: Manrope;
@@ -50,3 +52,20 @@
     object-fit: cover;
   }
 }
+
+// test
+.card{
+  .d-flex .row {
+    width: 150px; /* Espace entre les colonnes */
+   }
+   .ingredients {
+    height: 170px;
+    overflow: hidden;
+   }
+}
+
+
+// .d-flex{
+//   width: calc(50% - 10px); /* Largeur de chaque colonne (50% de la largeur totale moins l'espace entre les colonnes) */
+//   height: 170px; /* Hauteur fixe pour chaque ligne */
+// }

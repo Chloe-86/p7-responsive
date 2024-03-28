@@ -1,48 +1,25 @@
-// class App {
-//     constructor(){
+class App {
+    constructor() {
+        this.dataRecipeApi = new recipesApi("/js/data/recipe.json");
+        this.recipeContainer = document.querySelector('.recipe');
+    }
 
-//     }
+    async pageListRecipe() {
+        const recipes = await this.dataRecipeApi.getList();
+        this.displayCardRecipe(recipes); // Passer les données récupérées à displayCardRecipe()
+    }
 
-// }
-
-// const app = newApp();
-
-// const filterImg = document.querySelectorAll(".filter img");
-// // Sélection de la liste ul
-// const filterUl = document.querySelectorAll(".filter ul");
-// const filterbar = document.querySelectorAll(".dropdown-toggle");
-// // Ajout d'un gestionnaire d'événements au clic sur l'image
-
-// filterbar.forEach((filterbar) => {
-//   filterbar.addEventListener("click", (e) => {
-//     // Ajout de la classe active à la liste ul
-//     filterUl.forEach((filterul) => {
-//     if (!filterul.classList.contains("show")) {
-//       // Appliquer le style à l'image lorsque la liste ul a la classe active
-//       filterImg.forEach(filterImg => {
-//         filterImg.style.transform = "rotateY(180deg)";
-//       });
-    
-//     } else {
-//       // Supprimer le style si la liste ul n'a pas la classe active
-//       filterImg.forEach(filterImg => {
-//         filterImg.style.transform = "rotateY(-180deg)";
-//       });
-//     }})
-//   });
-// });
-document.addEventListener('DOMContentLoaded', function () {
-    var filterbars = document.querySelectorAll(".dropdown-toggle");
-
-    filterbars.forEach((filterbar) => {
-        filterbar.addEventListener('shown.bs.dropdown', (event)=> {
-            var filterImg = event.currentTarget.querySelector("img.fleche");
-            filterImg.style.transform = "rotate(180deg)";
+    displayCardRecipe(recipes) {
+        recipes.forEach(recipe => { // Parcourir chaque recette
+            const { name, description, ingredients, image } = recipe; // Extraire les données de chaque recette
+            const recipeCard = new FactoryCard(this.recipeContainer);
+            const imagePath = `./assets/images/recipes/${image}`;
+            recipeCard.renderCard(name, description, ingredients, imagePath);
         });
+    }
+}
 
-        filterbar.addEventListener('hidden.bs.dropdown',  (event)=>  {
-            var filterImg = event.currentTarget.querySelector("img.fleche");
-            filterImg.style.transform = "rotate(0deg)";
-        });
-    });
-});
+const app = new App();
+app.pageListRecipe();
+app.displayCardRecipe();
+
