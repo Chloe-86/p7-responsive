@@ -1,0 +1,216 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background: #fff;
+  min-height: 100vh;
+  font-family: Anton;
+  color: #1B1B1B;
+}
+
+.main-container, main {
+  max-width: 1440px !important;
+  margin: 0 auto;
+}
+
+header {
+  background-image: url(../../../assets/images/background-header.png);
+  height: clamp(400px, 15vh, 960px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+}
+header h1 {
+  position: absolute;
+  top: 2vw;
+  left: 4vh;
+}
+header h2 {
+  color: #ffd15b;
+  font-family: Anton;
+  font-size: clamp(16px, 4vw, 44px);
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
+header .wrapper-header {
+  max-width: 890px;
+  height: 100%;
+}
+
+main {
+  background: #EDEDED !important;
+  padding: 20px 100px 201px;
+}
+
+.select-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected-filter {
+  display: none;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.filter {
+  position: relative;
+}
+.filter img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+}
+.filter a {
+  padding-right: 63px;
+}
+
+.bg-dark {
+  background-color: #1B1B1B;
+}
+
+.dropdown-menu.show {
+  max-width: inherit;
+}
+
+.toggle {
+  text-align: center;
+  display: inline-flex;
+  padding: 17px 0;
+  align-items: center;
+  gap: 63px;
+  border-radius: 11px;
+  border: none;
+  max-width: 195px;
+  padding-left: 20px;
+}
+
+.filtrerecipes {
+  gap: 64px;
+  margin-bottom: 55px;
+}
+
+.filter {
+  color: #1B1B1B;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.filter-right p {
+  font-family: Anton;
+  text-transform: capitalize;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.card {
+  border-radius: 21px;
+  background: #fff;
+  box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+  width: 380px;
+}
+.card .card-wrapper {
+  padding: 32px 25px 61px;
+}
+.card .card-title {
+  color: var(--Grey, #7a7a7a);
+  font-family: Manrope;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1.08px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+.card .card-text {
+  color: #1B1B1B;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 32px;
+}
+.card .card-grid h4 {
+  color: var(--Black, #1b1b1b);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.card .card-grid p {
+  color: var(--Grey, #7a7a7a);
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.card img.card-img-top {
+  border-radius: 21px 21px 0 0;
+  max-height: 253px;
+  object-fit: cover;
+}
+
+.custom-search-bar {
+  height: 72px;
+  margin: 0 auto; /* Centers the search bar horizontally */
+}
+.custom-search-bar .input-group-text {
+  background: #1B1B1B !important;
+}
+.custom-search-bar #logo-research > span {
+  border-radius: 10px !important;
+  padding: 12px !important;
+}
+
+header {
+  background-image: url(../../../assets/images/background-header.png);
+  height: clamp(400px, 15vh, 960px);
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
+}
+header h1 {
+  position: absolute;
+  top: 2vw;
+  left: 4vh;
+}
+header h2 {
+  color: #ffd15b;
+  font-family: Anton;
+  font-size: clamp(16px, 4vw, 44px);
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
+header .wrapper-header {
+  max-width: 890px;
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */

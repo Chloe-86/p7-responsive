@@ -1,0 +1,12 @@
+.custom-search-bar {
+ 
+  height: 72px;
+  margin: 0 auto; /* Centers the search bar horizontally */
+  .input-group-text {
+    background: $color-secondary !important;
+  }
+  #logo-research > span{
+    border-radius: 10px!important;
+    padding: 12px!important;
+  }
+}

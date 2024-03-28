@@ -1,0 +1,66 @@
+.select-box {
+  @include flex($display: flex, $justify: space-between, $align: center);
+}
+
+.selected-filter {
+  display: none;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+.filter {
+  position: relative;
+
+  img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+  }
+  a {
+    padding-right: 63px;
+  }
+}
+.bg-dark {
+  background-color: $color-secondary;
+}
+
+// bootstrap overide
+
+.dropdown-menu.show {
+  max-width: inherit;
+}
+.toggle {
+  text-align: center;
+  display: inline-flex;
+  padding: 17px 0;
+  align-items: center;
+  gap: 63px;
+  border-radius: 11px;
+  border: none;
+  max-width: 195px;
+  padding-left: 20px;
+}
+.filtrerecipes {
+  gap: 64px;
+  margin-bottom: 55px;
+}
+
+
+.filter {
+    color: $color-secondary;
+    font-family: Manrope;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+.filter-right p {
+    font-family: Anton;
+    text-transform: capitalize;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }

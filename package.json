@@ -1,0 +1,23 @@
+{
+  "name": "les-petits-plats",
+  "version": "1.0.0",
+  "description": "Un site de recettes de cuisine",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./sass/main.scss:./css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chloe-86/p7-responsive.git"
+  },
+  "keywords": [
+    "recettes",
+    "cuisine"
+  ],
+  "author": "chloe de rigal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chloe-86/p7-responsive/issues"
+  },
+  "homepage": "https://github.com/Chloe-86/p7-responsive#readme"
+}

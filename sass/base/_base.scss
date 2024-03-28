@@ -1,0 +1,28 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    // 10px div by def of 16px
+    font-size: 62.5%;
+
+}
+
+body {
+    box-sizing: border-box;
+    background: $color-primary;
+    min-height: 100vh;
+    font-family: Anton;
+    color: $color-secondary;
+    
+}
+
+.main-container, main{
+    max-width: 1440px!important;
+    margin: 0 auto;
+ 
+}

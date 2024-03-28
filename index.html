@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <header>
+        <h1>
+          <img src="./assets/svg/logo.svg" alt="Les petits plats logo" /><img
+            src="./assets/svg/round.svg"
+            alt="rond"
+          />
+        </h1>
+        <!-- <div class="container text-center header-text"> -->
+          <div class="wrapper-header container text-center col d-flex flex-column justify-content-center align-content-center ">
+          <h2>
+            Cherchez parmi plus de 1500 recettes du quotidien, simples et
+            délicieuses
+          </h2>
+          <form>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Rechercher une recette, un ingrédient..."
+              />
+              <div class="input-group-btn">
+                <span
+                  class="input-group-text border-0 bg-white"
+                  id="logo-research"
+                  ><span class="bg-dark"
+                    ><img
+                      src="./assets/svg/logo-research.svg"
+                      alt="Logo"
+                      width="30"
+                      height="30" /></span
+                ></span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </header>
+      <main>
+          <div class="d-flex flex-row justify-content-between align-items-center ">
+          <div class="filter row">
+            <section class="container d-flex flex-row filtrerecipes">
+              <div class="dropdown text-center ">
+                  <a class="btn btn-secondary bg-white text-dark dropdown-toggle toggle Ingredient" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Ingrédients
+                      <img src="assets/svg/arrow.svg" alt="" class="fleche fleche1">
+                  </a>       
+                  <ul class="dropdown-menu">
+                    <li><input type="search" id="site-search" class="rechercheIngredient" name="q" /></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                  </ul>
+                </div>
+              <div class="dropdown text-center">
+                  <a class="btn btn-secondary bg-white text-dark dropdown-toggle toggle Appareils" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Appareil
+                      <img src="assets/svg/arrow.svg" alt="" class="fleche fleche1">
+                  </a>
+                
+                  <ul class="dropdown-menu">
+                    <li><input type="search" id="site-search" class="rechercheIngredient" name="q" /></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                  </ul>
+                </div>
+              <div class="dropdown text-center filtre ">
+                  <a class="btn btn-secondary bg-white text-dark dropdown-toggle toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Ustensiles
+                      <img src="assets/svg/arrow.svg" alt="" class="fleche fleche2">
+                  </a>
+                  
+                  <ul class="dropdown-menu">
+                    <li><input type="search" id="site-search" class="rechercheIngredient" name="q" /></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </div>
+          </section>
+          </div>
+          <div class="filter-right">
+            <p>1500 recettes</p>
+          </div>
+          </div>
+          <div class="selected-filter"></div>
+          <div>
+          <section class="container recipe">
+              <article class="card">
+                <img src="./assets/images/recipes/Recette01.jpg" class="card-img-top" alt="...">
+                <div class="card-wrapper">
+                    <div class="card-header bg-white border-0">
+                      <h2 class="card-header-title">Limonade de Coco</h2>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title ">Recette</h3>
+                      <p class="card-text">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+                    </div>
+                    <div class="card-footer bg-white border-0" style="border-radius: 21px;">
+                  <h3 class="card-title ">ingrédients</h3>
+                  <div class="card-grid ">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <h4>Lait de coco</h4>
+                          <p>400ml</p>
+                        </div>
+                        <div class="row">
+                          <h4>Lait de coco</h4>
+                          <p>400ml</p>
+                        </div>
+                        <div class="row">
+                          <h4>Lait de coco</h4>
+                          <p>400ml</p>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="row">
+                          <h4>Lait de coco</h4>
+                          <p>400ml</p>
+                        </div>
+                        <div class="row">
+                          <h4>Lait de coco</h4>
+                          <p>400ml</p>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                    </div>
+                </div>
+              </article>
+          </section>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+    <script src="./js/class/Api.js"></script>
+    <script src="js/App.js"></script>
+    <script src="./js/templates/Fabrik.js"></script>
+  </body>
+</html>
