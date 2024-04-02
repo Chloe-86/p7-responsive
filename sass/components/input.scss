@@ -9,4 +9,13 @@
     border-radius: 10px!important;
     padding: 12px!important;
   }
+  
+}
+.form-control[placeholder]{
+  color: $color-lightgrey;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

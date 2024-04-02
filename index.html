@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link
@@ -10,10 +10,13 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-  
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
@@ -26,7 +29,9 @@
           />
         </h1>
         <!-- <div class="container text-center header-text"> -->
-          <div class="wrapper-header container text-center col d-flex flex-column justify-content-center align-content-center ">
+        <div
+          class="wrapper-header container text-center col d-flex flex-column justify-content-center align-content-center"
+        >
           <h2>
             Cherchez parmi plus de 1500 recettes du quotidien, simples et
             délicieuses
@@ -55,67 +60,115 @@
         </div>
       </header>
       <main>
-          <div class="d-flex flex-row justify-content-between align-items-center ">
+        <div
+          class="filter-bar d-flex flex-row justify-content-between align-items-center"
+        >
           <div class="filter filter-left row">
             <section class="container d-flex flex-row filtrerecipes">
-              <div class="dropdown text-center ">
-                  <a class="btn btn-secondary bg-white text-dark dropdown-toggle toggle Ingredient" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Ingrédients
-                      <img src="assets/svg/arrow.svg" alt="" class="fleche fleche1">
-                  </a>       
-                  <div class="dropdown-menu">
-                    <input type="search" id="site-search" class="rechercheIngredient" name="q" />
-                    <button type="submit" form="formId">
-                        <img src="./assets/svg/logo-search-input.svg" alt="logo recherche">
-                    </button>
-                    <ul class="selected-filter"></ul>
-                    <ul  id="ingredients">
-                      
-                    </ul>
-                  </div>
-                </div>
               <div class="dropdown text-center">
-                  <a class="btn btn-secondary bg-white text-dark dropdown-toggle toggle Appareils" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Appareil
-                      <img src="assets/svg/arrow.svg" alt="" class="fleche fleche1">
-                  </a>
-                
-                  <ul class="dropdown-menu">
-                    <input type="search" id="site-search" class="rechercheIngredient" name="q" />
-                    <button type="submit" form="formId">
-                      <img src="./assets/svg/logo-search-input.svg" alt="logo recherche">
-                    </button>
-                    <ul id="appliance">
-                     
-                    </ul>
-                  </ul>
+                <a
+                  class="btn btn-secondary bg-white text-dark dropdown-toggle toggle Ingredient"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Ingrédients
+                  <img
+                    src="assets/svg/arrow.svg"
+                    alt=""
+                    class="fleche fleche1"
+                  />
+                </a>
+                <div class="dropdown-menu">
+                  <input
+                    type="search"
+                    id="search-ingredients"
+                    class="rechercheIngredient"
+                    name="q"
+                  />
+                  <button type="submit" >
+                    <img
+                      src="./assets/svg/logo-search-input.svg"
+                      alt="logo recherche"
+                    />
+                  </button>
+                  <ul class="selected-filter"></ul>
+                  <ul id="ingredients"></ul>
                 </div>
-              <div class="dropdown text-center filtre ">
-                  <a class="btn btn-secondary bg-white text-dark dropdown-toggle toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Ustensiles
-                      <img src="assets/svg/arrow.svg" alt="" class="fleche fleche2">
-                  </a>
-                  
-                  <ul class="dropdown-menu">
-                    <input type="search" id="site-search" class="rechercheIngredient" name="q" />
-                    <button type="submit" form="formId">
-                      <img src="./assets/svg/logo-search-input.svg" alt="logo recherche">
-                    </button>
-                    <ul id="ustensils">
-                     
-                    </ul>
-                    
-                  </ul>
+              </div>
+              <div class="dropdown text-center">
+                <a
+                  class="btn btn-secondary bg-white text-dark dropdown-toggle toggle Appareils"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Appareil
+                  <img
+                    src="assets/svg/arrow.svg"
+                    alt=""
+                    class="fleche fleche1"
+                  />
+                </a>
+
+                <div class="dropdown-menu">
+                  <input
+                    type="search"
+                    id="search-appliance"
+                    class="rechercheIngredient"
+                    name="q"
+                  />
+                  <button type="submit" form="formId">
+                    <img
+                      src="./assets/svg/logo-search-input.svg"
+                      alt="logo recherche"
+                    />
+                  </button>
+                  <ul id="appliance"></ul>
                 </div>
-          </section>
+              </div>
+              <div class="dropdown text-center filtre">
+                <a
+                  class="btn btn-secondary bg-white text-dark dropdown-toggle toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Ustensiles
+                  <img
+                    src="assets/svg/arrow.svg"
+                    alt=""
+                    class="fleche fleche2"
+                  />
+                </a>
+
+                <div class="dropdown-menu">
+                  <input
+                    type="search"
+                    id="search-ustensils"
+                    class="rechercheIngredient"
+                    name="q"
+                  />
+                  <button type="submit" form="formId">
+                    <img
+                      src="./assets/svg/logo-search-input.svg"
+                      alt="logo recherche"
+                    />
+                  </button>
+                  <ul id="ustensils"></ul>
+                </div>
+              </div>
+            </section>
           </div>
           <div class="filter-right">
-            <p>1500 recettes</p>
+            <p><span></span> recettes</p>
           </div>
-          </div>
-          <div>
-          <section class="container recipe row">
-              <!-- <article class="card">
+        </div>
+        <section class="container recipe row">
+          <!-- <article class="card">
                 <img src="./assets/images/recipes/Recette01.jpg" class="card-img-top" alt="...">
                 <div class="card-wrapper">
                     <div class="card-header bg-white border-0">
@@ -159,12 +212,14 @@
                     </div>
                 </div>
               </article> -->
-          </section>
+        </section>
       </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="./index.js"></script>
     <script src="./js/class/Api.js"></script>
     <script src="js/App.js"></script>

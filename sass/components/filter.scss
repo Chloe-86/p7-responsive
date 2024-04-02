@@ -43,6 +43,9 @@
   padding-left: 20px;
 }
 
+.filter-bar{
+  margin-bottom: 55px;
+}
 
 .filter {
   color: $color-secondary;
@@ -51,12 +54,13 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
 }
 
 .filter-left {
   .filtrerecipes {
     gap: 64px;
-    margin-bottom: 55px;
+   
   }
   .dropdown{
     width: 195px!important;

@@ -10,6 +10,7 @@ class FilterForm {
     this.filterWrapperulIng = document.querySelector("#ingredients");
     this.filterWrapperulApp = document.querySelector("#appliance");
     this.filterWrapperulUst = document.querySelector("#ustensils");
+    this.totalRecipes = document.querySelector(".filter-right span");
     this.listIngredientsArray = [];
   }
 
@@ -64,7 +65,11 @@ class FilterForm {
       });
     });
   }
-  renderTotal(){
-    console.log(this.recipeContainer.length);
-  }
+  renderTotal(total) {
+    total = this.recipeContainer.length; // Mise à jour du total
+    console.log(total); // Vérification dans la console
+    this.totalRecipes.textContent = total; // Ajout du total en tant que texte
+    return total; // Renvoyer le total mis à jour si nécessaire
+}
+
 }
