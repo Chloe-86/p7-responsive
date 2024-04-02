@@ -10,13 +10,17 @@ class App {
     }
 
     displayCardRecipe(recipes) {
-        recipes.forEach(recipe => { // Parcourir chaque recette
+        recipes.slice(0, 10).forEach(recipe => { // Parcourir les 10 premières recettes
             const { name, description, ingredients, image } = recipe; // Extraire les données de chaque recette
             const recipeCard = new FactoryCard(this.recipeContainer);
             const imagePath = `./assets/images/recipes/${image}`;
             recipeCard.renderCard(name, description, ingredients, imagePath);
         });
     }
+    
+
+    // const Search = new SearchForm(this.FullMovies);
+    // Search.render();
 }
 
 const app = new App();

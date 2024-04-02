@@ -10,7 +10,7 @@ class FactoryCard {
 }
   createDivCol() {
     const div = document.createElement('div');
-    div.classList.add('col-lg-4');
+    div.classList.add('col-lg-4', 'mb-5');
     return div;
 }
   createArticle() {
@@ -99,4 +99,5 @@ class FactoryCard {
       div.appendChild(article);
       this.recipeContainer.appendChild (div);
   }
+  
 }
