@@ -101,11 +101,6 @@ main {
   padding-left: 20px;
 }
 
-.filtrerecipes {
-  gap: 64px;
-  margin-bottom: 55px;
-}
-
 .filter {
   color: #1B1B1B;
   font-family: Manrope;
@@ -113,6 +108,52 @@ main {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.filter-left .filtrerecipes {
+  gap: 64px;
+  margin-bottom: 55px;
+}
+.filter-left .dropdown {
+  width: 195px !important;
+}
+.filter-left .dropdown-toggle {
+  width: 100%;
+}
+.filter-left input {
+  margin-left: 16px;
+  margin-right: 16px;
+  height: 36px;
+  width: 163px;
+  border-color: #C6C6C6;
+  outline: none;
+}
+.filter-left ul {
+  padding-left: unset;
+}
+.filter-left li {
+  list-style-type: none;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  cursor: pointer;
+  padding: 9px 16px;
+}
+.filter-left li:hover {
+  background-color: #ffd15b;
+}
+.filter-left .dropdown-menu {
+  border-radius: 11px;
+  position: relative;
+  height: 315px;
+  overflow: hidden;
+}
+.filter-left .dropdown-menu button {
+  border: none;
+}
+.filter-left .dropdown-menu button img {
+  position: absolute;
+  top: 25px;
+  right: 20px;
 }
 
 .filter-right p {

@@ -42,25 +42,71 @@
   max-width: 195px;
   padding-left: 20px;
 }
-.filtrerecipes {
-  gap: 64px;
-  margin-bottom: 55px;
-}
 
 
 .filter {
-    color: $color-secondary;
-    font-family: Manrope;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
+  color: $color-secondary;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.filter-left {
+  .filtrerecipes {
+    gap: 64px;
+    margin-bottom: 55px;
   }
+  .dropdown{
+    width: 195px!important;
+  }
+  .dropdown-toggle{
+    width: 100%;
+  }
+  input {
+    margin-left: 16px;
+    margin-right: 16px;
+    height: 36px;
+    width: 163px;
+    border-color: $color-lightgrey;
+    outline: none;
+  }
+  ul {
+    padding-left: unset;
+  }
+  li {
+    list-style-type: none;
+    margin-top: 13px;
+    margin-bottom: 13px;
+    cursor: pointer;
+    padding: 9px 16px;
+  }
+  li:hover {
+    background-color: $color-yellow;
+  }
+
+  .dropdown-menu {
+    border-radius: 11px;
+    position: relative;
+    height: 315px;
+    overflow: hidden;
+    button {
+      border: none;
+    }
+    button img {
+      position: absolute;
+      top: 25px;
+      right: 20px;
+    }
+  }
+}
+
 .filter-right p {
-    font-family: Anton;
-    text-transform: capitalize;
-    font-size: 21px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
+  font-family: Anton;
+  text-transform: capitalize;
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Chloe-86/p7-responsive/issues"
   },
-  "homepage": "https://github.com/Chloe-86/p7-responsive#readme"
+  "homepage": "https://github.com/Chloe-86/p7-responsive#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
 }

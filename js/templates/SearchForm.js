@@ -1,12 +1,12 @@
 class SearchForm {
-    constructor(Movies) {
-        this.Movies = Movies
-        this.isSearchingByActor = false
+    constructor(Ingredients) {
+        this.Ingredients = Ingredients
+        this.isSearchingByIngredients = false // Indique si la recherche se fait par ingredients de base ell est sur false
 
-        this.MovieNameSearch = new MovieNameSearch(Movies)
-        this.ActorNameSearch = new ActorNameSearch(Movies)
+        this.UstencilsNameSearch = new UstencilsNameSearch(Ingredients)
+        this.IngredientsNameSearch = new IngredientsNameSearch(Ingredients)
 
-        this.$wrapper = document.createElement('div')
+        // this.$wrapper = document.createElement('div')
         this.$searchFormWrapper = document.querySelector('.search-form-wrapper')
         this.$moviesWrapper = document.querySelector('.movies-wrapper')
     }
@@ -14,8 +14,8 @@ class SearchForm {
     search(query) {
         let SearchedMovies = null
         
-        if (this.isSearchingByActor) {
-            SearchedMovies = this.ActorNameSearch.search(query)
+        if (this.isSearchingByIngredients) {
+            SearchedMovies = this.IngredientsNameSearch.search(query)
         } else {
             SearchedMovies = this.MovieNameSearch.search(query)
         }
@@ -45,7 +45,7 @@ class SearchForm {
                 if (query.length >= 3) {
                     this.search(query)
                 } else if (query.length === 0) {
-                    this.displayMovies(this.Movies)
+                    this.displayMovies(this.Ingredients)
                 }
             })
     }
@@ -54,9 +54,9 @@ class SearchForm {
         this.$wrapper
             .querySelector('.search-checkbox')
             .addEventListener('change', e => {
-                this.isSearchingByActor = e.target.checked
+                this.isSearchingByIngredients = e.target.checked
 
-                console.log(this.isSearchingByActor)
+                console.log(this.isSearchingByIngredients)
             })
     }
 

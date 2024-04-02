@@ -7,6 +7,8 @@ class App {
     async pageListRecipe() {
         const recipes = await this.dataRecipeApi.getList();
         this.displayCardRecipe(recipes); // Passer les données récupérées à displayCardRecipe()
+        // this.recipesObject = recipes.map(recipe=> console.log(recipe))
+        this.displayFilterElements(recipes);
     }
 
     displayCardRecipe(recipes) {
@@ -18,6 +20,13 @@ class App {
         });
     }
     
+    displayFilterElements(recipes){
+        const Filter = new FilterForm(recipes);
+        Filter.renderFilterIngredients();
+        Filter.renderFilterUstencils();
+        Filter.renderFilterAppliance();
+        Filter.renderTotal();
+    }
 
     // const Search = new SearchForm(this.FullMovies);
     // Search.render();
@@ -25,5 +34,6 @@ class App {
 
 const app = new App();
 app.pageListRecipe();
-app.displayCardRecipe();
+
+
 
