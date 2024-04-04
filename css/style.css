@@ -64,6 +64,50 @@ main {
   display: none;
 }
 
+.selected-filter.active {
+  display: block;
+  margin-bottom: 25px;
+  background-color: #ffd15b;
+}
+
+.selectedFilters ul {
+  margin-top: 21px;
+  padding-bottom: 43px;
+  display: none;
+}
+.selectedFilters ul li {
+  display: inline-flex;
+  padding: 17px 18px;
+  align-items: center;
+  gap: 60px;
+  border-radius: 10px;
+  background: #ffd15b;
+}
+.selectedFilters ul .active {
+  display: block;
+}
+
+.selectedFilters ul.active {
+  display: block;
+}
+
+.filter-bar.selectedFilters.active {
+  margin-bottom: unset;
+}
+
+.btn-filter {
+  color: #000;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 10px;
+}
+.btn-filter span {
+  cursor: pointer;
+}
+
 .dropdown-toggle::after {
   display: none;
 }
@@ -149,6 +193,10 @@ main {
   position: relative;
   height: 315px;
   overflow: hidden;
+}
+.filter-left .dropdown-menu .filterListItems {
+  height: 100%;
+  overflow-y: auto;
 }
 .filter-left .dropdown-menu button {
   border: none;

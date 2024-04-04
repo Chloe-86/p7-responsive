@@ -5,7 +5,46 @@
 .selected-filter {
   display: none;
 }
+.selected-filter.active {
+  display: block;
+  margin-bottom: 25px;
+  background-color: $color-yellow;
+}
+.selectedFilters ul {
+  margin-top: 21px;
+  padding-bottom: 43px;
+  display: none;
+  li {
+    display: inline-flex;
+    padding: 17px 18px;
+    align-items: center;
+    gap: 60px;
+    border-radius: 10px;
+    background: $color-yellow;
+  }
+  .active {
+    display: block;
+  }
+}
 
+.selectedFilters ul.active {
+  display: block;
+}
+.filter-bar.selectedFilters.active {
+  margin-bottom: unset;
+}
+.btn-filter {
+  color: #000;
+  font-family: Manrope;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 10px;
+  span{
+    cursor: pointer;
+  }
+}
 .dropdown-toggle::after {
   display: none;
 }
@@ -43,7 +82,7 @@
   padding-left: 20px;
 }
 
-.filter-bar{
+.filter-bar {
   margin-bottom: 55px;
 }
 
@@ -54,18 +93,16 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-
 }
 
 .filter-left {
   .filtrerecipes {
     gap: 64px;
-   
   }
-  .dropdown{
-    width: 195px!important;
+  .dropdown {
+    width: 195px !important;
   }
-  .dropdown-toggle{
+  .dropdown-toggle {
     width: 100%;
   }
   input {
@@ -95,6 +132,12 @@
     position: relative;
     height: 315px;
     overflow: hidden;
+
+
+    .filterListItems{
+      height: 100%;
+      overflow-y: auto;
+    }
     button {
       border: none;
     }

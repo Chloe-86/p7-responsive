@@ -22,10 +22,14 @@ class App {
     
     displayFilterElements(recipes){
         const Filter = new FilterForm(recipes);
-        Filter.renderFilterIngredients();
-        Filter.renderFilterUstencils();
-        Filter.renderFilterAppliance();
+        // Filter.renderFilterIngredients();
+        // Filter.renderFilterUstencils();
+        // Filter.renderFilterAppliance();
         Filter.renderTotal();
+        Filter.renderFilters();
+        Filter.onSearch();
+ 
+        // Filter.renderFilterList()
     }
 
     // const Search = new SearchForm(this.FullMovies);
