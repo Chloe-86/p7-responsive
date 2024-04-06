@@ -84,7 +84,7 @@
                   <input
                     type="search"
                     id="search-ingredients"
-                    class="rechercheIngredient"
+                    class="search"
                     name="q"
                   />
                   <button type="submit">
@@ -94,7 +94,7 @@
                     />
                   </button>
                   <ul class="selected-filter"></ul>
-                  <ul id="ingredients" class="filterListItems"></ul>
+                  <ul id="ingredients" class="filter-list-item"></ul>
                 </div>
               </div>
               <div class="dropdown text-center">
@@ -117,7 +117,7 @@
                   <input
                     type="search"
                     id="search-appliance"
-                    class="rechercheIngredient"
+                    class="search"
                     name="q"
                   />
                   <button type="submit">
@@ -126,7 +126,7 @@
                       alt="logo recherche"
                     />
                   </button>
-                  <ul id="appliance" class="filterListItems"></ul>
+                  <ul id="appliance" class="filter-list-item"></ul>
                 </div>
               </div>
               <div class="dropdown text-center filtre">
@@ -149,7 +149,7 @@
                   <input
                     type="search"
                     id="search-ustensils"
-                    class="rechercheIngredient"
+                    class="search"
                     name="q"
                   />
                   <button type="submit">
@@ -158,7 +158,7 @@
                       alt="logo recherche"
                     />
                   </button>
-                  <ul id="ustensils" class="filterListItems"></ul>
+                  <ul id="ustensils" class="filter-list-item"></ul>
                 </div>
               </div>
             </div>
@@ -182,8 +182,9 @@
     <script type="module" src="./index.js"></script>
     <script src="./js/class/Api.js"></script>
     <script src="js/App.js"></script>
+    <script src="./js/utils/Animation.js"></script>
     <script src="./js/templates/FilterForm.js"></script>
     <script src="./js/templates/FactoryCard.js"></script>
-    <script src="./js/utils/animation.js"></script>
+   
   </body>
 </html>
