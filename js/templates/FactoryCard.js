@@ -110,7 +110,7 @@ class FactoryCard {
       const h4 = document.createElement("h4");
       h4.textContent = ingredient.ingredient;
       const p = document.createElement("p");
-      p.textContent = ingredient.quantity;
+      p.textContent = `${ingredient.quantity || ''} ${ingredient.unit || ''}` ;
       row.appendChild(h4);
       row.appendChild(p);
       cardIngredients.appendChild(row);

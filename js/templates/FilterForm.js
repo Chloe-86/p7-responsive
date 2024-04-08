@@ -11,18 +11,16 @@ class FilterForm {
     this.ustensils = [];
     this.cardWrapper = document.querySelector(".recipe");
     this.filterWrapperulIng = document.querySelector("#ingredients");
-    this.selectedFilter = document.querySelector("ul.selected-filter");
     this.selectedFilters = document.querySelector(".selectedFilters ul");
+    this.filterListItem = document.querySelector(".filter-list-item ul");
     this.filterWrapperulApp = document.querySelector("#appliance");
     this.filterWrapperulUst = document.querySelector("#ustensils");
     this.totalRecipes = document.querySelector(".filter-right span");
-    this.filterListItems = document.querySelectorAll(".filter-list-item");
     this.inputs = document.querySelectorAll("input.search");
     this.ingredientsSet = new Set();
     this.applianceSet = new Set();
     this.ustensilsSet = new Set();
     this.filteredIngredients = new Set();
-    
   }
 
   /**
@@ -75,34 +73,60 @@ class FilterForm {
   /**
    * Permets d 'extraire les filtres et les mettre en dessous pour les garder visuellement en mémoire pour l'utilisateur
    *
-   * @param {HTMLElement} ulElement- L'élément UL où les filtres sélectionnés seront affichés.
+   * @param {HTMLElement} ulElementWrapper- L'élément UL où les filtres sélectionnés seront affichés.
    * @param {*} filtersElement- Le filtre en question
+   *    * @param {*} ulElement- Le filtre ou on selectionne les elements que l'on filtrera
    * @memberof FilterForm
    */
 
-  onClick(ulElement, filtersElement) {
+  onClick(ulElementWrapper, filtersElement) {
     // On vide le contenu de la sélection de filtres
-    this.clearElement(ulElement);
+    this.clearElement(ulElementWrapper);
     filtersElement.addEventListener("click", (e) => {
       this.selectedItem = e.target.textContent;
 
-      ulElement.innerHTML += `<li class="btn-filter">${this.selectedItem}<span>
+      ulElementWrapper.innerHTML += `<li class="btn-filter">${this.selectedItem}<span>
             <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
-      ulElement.classList.add("active");
+      ulElementWrapper.classList.add("active");
+      
     });
     // Ajoutez un gestionnaire d'événements pour les clics sur les boutons de suppression des filtres
-    ulElement.addEventListener("click", (e) => {
+    ulElementWrapper.addEventListener("click", (e) => {
       // Vérifiez si l'élément cliqué est un bouton de suppression (balise <img>)
       if (e.target.tagName === "IMG") {
         // Supprimez l'élément de filtre parent de l'image cliquée
         e.target.closest(".btn-filter").remove();
-        if (ulElement.innerHTML === "") {
-          ulElement.classList.remove("active");
+        if (ulElementWrapper.innerHTML === "") {
+          ulElementWrapper.classList.remove("active");
         }
       }
     });
   }
 
+
+  onSearch(input, dataSet, filterWrapper) {
+    input.addEventListener("keyup", (e) => {
+      const query = e.target.value.toLowerCase();
+  
+      // Lance la recherche si la longueur de la requête est supérieure ou égale à 1
+      if (query.length >= 1) {
+        const filteredData = dataSet.filter((item) =>
+          item.toLowerCase().includes(query)
+        );
+  
+        // Afficher les données filtrées dans le wrapper de filtre approprié
+        this.renderFilterModel(filterWrapper, filteredData);
+  
+      } else {
+        // Réinitialiser le wrapper de filtre avec le jeu de données complet si la requête est vide
+        this.renderFilterModel(filterWrapper, dataSet);
+      }
+    });
+  }
+
+
+  
+  
   /**
    * Cette méthode met à jour l'affichage du nombre total de recettes dans l'interface utilisateur.
    *
@@ -133,13 +157,12 @@ class FilterForm {
     this.onClick(this.selectedFilters, this.filterWrapperulIng);
     this.onClick(this.selectedFilters, this.filterWrapperulApp);
     this.onClick(this.selectedFilters, this.filterWrapperulUst);
+    // this.onSearch(this.filterWrapperulIng);
+    // this.onSearch(this.filterWrapperulApp);
+    // this.onSearch(this.filterWrapperulUst);
+  // Gestion des événements de filtrage pour chaque champ de recherche
+  this.onSearch(this.inputs[0], this.ingredients, this.filterWrapperulIng);
+  this.onSearch(this.inputs[1], this.appliances, this.filterWrapperulApp);
+  this.onSearch(this.inputs[2], this.ustensils, this.filterWrapperulUst);
   }
-
-  // rendu des cartes filtré
-  /**
-   * Trier les cartes d'après les filtres
-   *
-   * @memberof FilterForm
-   */
-  renderCards() {}
 }
