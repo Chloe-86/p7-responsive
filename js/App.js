@@ -38,13 +38,12 @@ class App {
 
   
     /**
-     * Configure les filtres pour les recettes.
+     * Affiche et configure les filtres pour les recettes.
      * @param {Array<Object>} recipes - Liste des recettes à filtrer.
      */
     Filters() {
         const filterForm = new FilterForm(this.recipes, this.recipeContainer);
         filterForm.renderFilters();
-       
     }
 }
 

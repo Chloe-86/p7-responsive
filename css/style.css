@@ -23,6 +23,10 @@ body {
   margin: 0 auto;
 }
 
+.recipe {
+  min-height: 100vh;
+}
+
 header {
   background-image: url(../../../assets/images/background-header.png);
   height: clamp(400px, 15vh, 960px);

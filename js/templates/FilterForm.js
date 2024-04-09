@@ -23,19 +23,13 @@ class FilterForm {
     this.ustensilsSet = new Set();
     this.filteredIngredients = new Set();
     this.input = document.querySelector(".input-group input");
-    
+    this.btnSearch = document.querySelector("span#logo-research");
+    this.displayOnlyTenRecipes(this.recipes);
   }
 
-  /**
-   *
-   * Modèle pour effacer un element.
-   * @param {HTMLElement} element
-   * @memberof FilterForm
-   */
-  clearElement(element) {
-    element.innerHTML = "";
+  compareJSON(jsonObject, searchTerm) {
+    return JSON.stringify(jsonObject).includes(searchTerm);
   }
-
   /**
    *Modele creation et afficher les elements de filtres dans chaque filtre
    *
@@ -44,24 +38,89 @@ class FilterForm {
    * @memberof FilterForm
    */
   renderFilterModel(ulElement, dataSet) {
-    this.clearElement(ulElement);
+    ulElement.innerHTML = "";
     dataSet.forEach((item) => {
       const liElt = document.createElement("li");
       liElt.textContent = item.toLowerCase();
       ulElement.appendChild(liElt);
     });
   }
+  /**
+   * Affiche une recette dans le conteneur spécifié.
+   *
+   * @param {Object} recipe - La recette à afficher.
+   * @memberof FilterForm
+   */
+  displayRecipeModel(recipe) {
+    const { name, description, ingredients, image } = recipe;
+    const recipeCard = new FactoryCard(this.recipeContainer);
+    const imagePath = `./assets/images/recipes/${image}`;
+    recipeCard.renderCard(name, description, ingredients, imagePath);
+  }
 
   /**
-   * Affiche toutes les recettes dans le conteneur spécifié en slicant 10 recettes.
-   * @param {Array<Object>} recipes - Liste des recettes.
+   * Affiche les recettes dans le conteneur spécifié.
+   *
+   * @param {Array<Object>} array - Liste des recettes à afficher.
+   * @memberof FilterForm
    */
-  displayRecipes() {
-    this.recipes.slice(0, 10).forEach((recipe) => {
-      const { name, description, ingredients, image } = recipe;
-      const recipeCard = new FactoryCard(this.recipeContainer);
-      const imagePath = `./assets/images/recipes/${image}`;
-      recipeCard.renderCard(name, description, ingredients, imagePath);
+  displayOnlyTenRecipes(array) {
+    this.recipeContainer.innerHTML = "";
+    array.slice(0, 10).forEach((recipe) => {
+      this.displayRecipeModel(recipe);
+    });
+  }
+  displayAllRecipes(array) {
+    this.recipeContainer.innerHTML = "";
+    array.forEach((recipe) => {
+      this.displayRecipeModel(recipe);
+    });
+  }
+  displaySearchRecipes(array) {
+    this.recipeContainer.innerHTML = "";
+    array.forEach((recipe) => {
+      this.displayRecipeModel(recipe);
+    });
+  }
+
+  /**
+   * Affiche les recettes filtrées dans le conteneur spécifié.
+   *
+   * @param {Array<Object>} array - Liste des recettes filtrées à afficher.
+   * @memberof FilterForm
+   */
+  displayNewRecipes(array) {
+    this.recipeContainer.innerHTML = "";
+    array.forEach((recipe) => {
+      this.displayRecipeModel(recipe);
+    });
+  }
+
+  compareInputResult() {
+    this.btnSearch.addEventListener("click", (e) => {
+      const inputSearchHeader = this.input.value.trim().toLowerCase();
+      // Filtrer les recettes en fonction de la recherche
+      const filteredRecipes = this.recipes.filter((recipe) => {
+        // Vérifier si le terme de recherche est présent dans la recette
+        this.result = this.compareJSON(recipe, inputSearchHeader);
+        return this.result;
+      });
+      // Afficher les nouvelles recettes filtrées
+      if (filteredRecipes.length === 0) {
+        this.recipeContainer.innerHTML= `<div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="mx-auto text-center style="font-family: 'Roboto', sans-serif;"">
+            <h2 class=" m-4">Il n'y a pas de termes contenant ces recettes<h2>
+            <h3 class="m-4"> Veuillez choisir un autre filtre, ingrédient ou ustensil.<br>
+            <p class="m-2">Merci.<p></div>
+          </div>
+        </div>
+      </div>`
+      } else {
+        // Afficher les nouvelles recettes filtrées
+        this.displaySearchRecipes(filteredRecipes);
+      }
     });
   }
 
@@ -97,7 +156,7 @@ class FilterForm {
 
   onClick(ulElementWrapper, filtersElement) {
     // On vide le contenu de la sélection de filtres
-    this.clearElement(ulElementWrapper);
+    ulElementWrapper.innerHTML = "";
     filtersElement.addEventListener("click", (e) => {
       this.selectedItem = e.target.textContent;
 
@@ -121,13 +180,14 @@ class FilterForm {
       if (e.target.tagName === "IMG") {
         // Supprimez l'élément de filtre parent de l'image cliquée
         e.target.closest(".btn-filter").remove();
+        this.displayAllRecipes(this.recipes);
+        this.renderTotal(this.recipes);
         if (ulElementWrapper.innerHTML === "") {
           ulElementWrapper.classList.remove("active");
         }
       }
     });
   }
-
 
   /**
    * Récupere le contenu des recettes et verifie les termes pour chaque filtre de sélection avec le terme selectionné.
@@ -164,22 +224,6 @@ class FilterForm {
     });
     this.displayNewRecipes(this.recipesWithSpecificClass);
     this.renderTotal(this.recipesWithSpecificClass);
-  }
-
-  /**
-   * Affiche les recettes filtrés
-   *
-   * @param {*} recipesWithSpecificClass
-   * @memberof FilterForm
-   */
-  displayNewRecipes(recipesWithSpecificClass) {
-    this.recipeContainer.innerHTML = "";
-    recipesWithSpecificClass.forEach((recipe) => {
-      const { name, description, ingredients, image } = recipe;
-      const recipeCard = new FactoryCard(this.recipeContainer);
-      const imagePath = `./assets/images/recipes/${image}`;
-      recipeCard.renderCard(name, description, ingredients, imagePath);
-    });
   }
 
   onSearch(input, dataSet, filterWrapper) {
@@ -222,6 +266,7 @@ class FilterForm {
   renderFilters() {
     // tableau d initialisation des datas
     this.initializeData();
+    this.compareInputResult();
     // déclaration des appels de rendu filtres
     this.renderFilterModel(this.filterWrapperulIng, this.ingredients);
     this.renderFilterModel(this.filterWrapperulApp, this.appliances);
@@ -236,7 +281,5 @@ class FilterForm {
     this.onSearch(this.inputs[0], this.ingredients, this.filterWrapperulIng);
     this.onSearch(this.inputs[1], this.appliances, this.filterWrapperulApp);
     this.onSearch(this.inputs[2], this.ustensils, this.filterWrapperulUst);
-    this.displayRecipes(this.recipes);
-
   }
 }
