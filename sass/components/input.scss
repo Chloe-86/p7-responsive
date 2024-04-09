@@ -19,3 +19,7 @@
   font-weight: 400;
   line-height: normal;
 }
+/* Masquer le placeholder au clic */
+input:focus::placeholder {
+  color: transparent;
+}

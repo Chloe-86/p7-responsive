@@ -24,13 +24,8 @@ class App {
      * Démarre l'application en récupérant les recettes, les affichant et en configurant les filtres.
      */
     async start() {
-        try {
-            const recipes = await this.fetchRecipes();
-            this.displayRecipes(recipes);
-            this.setupFilters(recipes);
-        } catch (error) {
-            console.error("Une erreur s'est produite :", error);
-        }
+            this.recipes = await this.fetchRecipes();
+            this.Filters(this.recipes);
     }
 
     /**
@@ -41,26 +36,15 @@ class App {
         return await this.dataRecipeApi.getList();
     }
 
-    /**
-     * Affiche les recettes dans le conteneur spécifié.
-     * @param {Array<Object>} recipes - Liste des recettes.
-     */
-    displayRecipes(recipes) {
-        recipes.slice(0, 10).forEach(recipe => {
-            const { name, description, ingredients, image } = recipe;
-            const recipeCard = new FactoryCard(this.recipeContainer);
-            const imagePath = `./assets/images/recipes/${image}`;
-            recipeCard.renderCard(name, description, ingredients, imagePath);
-        });
-    }
-
+  
     /**
      * Configure les filtres pour les recettes.
      * @param {Array<Object>} recipes - Liste des recettes à filtrer.
      */
-    setupFilters(recipes) {
-        const filterForm = new FilterForm(recipes);
+    Filters() {
+        const filterForm = new FilterForm(this.recipes, this.recipeContainer);
         filterForm.renderFilters();
+       
     }
 }
 
