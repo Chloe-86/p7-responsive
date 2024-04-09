@@ -120,6 +120,7 @@ class FilterForm {
       } else {
         // Afficher les nouvelles recettes filtrées
         this.displaySearchRecipes(filteredRecipes);
+        this.renderTotal(filteredRecipes)
       }
     });
   }
