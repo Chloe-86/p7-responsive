@@ -55,6 +55,7 @@
 
 // test
 .card{
+  position: relative;
   .d-flex .row {
     width: 150px; /* Espace entre les colonnes */
    }
@@ -64,8 +65,14 @@
    }
 }
 
-
-// .d-flex{
-//   width: calc(50% - 10px); /* Largeur de chaque colonne (50% de la largeur totale moins l'espace entre les colonnes) */
-//   height: 170px; /* Hauteur fixe pour chaque ligne */
-// }
+.time{
+  position: absolute;
+  right: 20px;
+  top: 21px;
+  padding: 5px 15px;
+  border-radius: 14px;
+  background-color: $color-yellow;
+  font-family: Manrope;
+  font-size: 12px;
+  font-weight: 400;
+}

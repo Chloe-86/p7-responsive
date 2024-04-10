@@ -68,6 +68,11 @@ main {
   display: none;
 }
 
+.activeFilter {
+  background-color: #ffd15b;
+  padding-bottom: 30px;
+}
+
 .selected-filter.active {
   display: block;
   margin-bottom: 25px;
@@ -182,6 +187,11 @@ main {
 .filter-left ul {
   padding-left: unset;
 }
+.filter-left .filter-list-item {
+  overflow-y: scroll;
+  height: 260px;
+  scrollbar-width: none;
+}
 .filter-left li {
   list-style-type: none;
   margin-top: 13px;
@@ -195,8 +205,6 @@ main {
 .filter-left .dropdown-menu {
   border-radius: 11px;
   position: relative;
-  height: 315px;
-  overflow: hidden;
 }
 .filter-left .dropdown-menu .filterListItems {
   height: 100%;
@@ -272,12 +280,27 @@ main {
   object-fit: cover;
 }
 
+.card {
+  position: relative;
+}
 .card .d-flex .row {
   width: 150px; /* Espace entre les colonnes */
 }
 .card .ingredients {
   height: 170px;
   overflow: hidden;
+}
+
+.time {
+  position: absolute;
+  right: 20px;
+  top: 21px;
+  padding: 5px 15px;
+  border-radius: 14px;
+  background-color: #ffd15b;
+  font-family: Manrope;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .custom-search-bar {
@@ -304,6 +327,10 @@ main {
 /* Masquer le placeholder au clic */
 input:focus::placeholder {
   color: transparent;
+}
+
+.input-group img {
+  cursor: pointer;
 }
 
 header {

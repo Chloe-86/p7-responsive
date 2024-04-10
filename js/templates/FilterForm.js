@@ -3,7 +3,7 @@
  * @class FilterForm
  */
 class FilterForm {
-  constructor(recipes, recipeContainer) {
+  constructor(recipes, recipeContainer, modelRecipes) {
     this.recipes = recipes;
     this.recipeContainer = recipeContainer;
     this.ingredients = [];
@@ -22,8 +22,9 @@ class FilterForm {
     this.ustensilsSet = new Set();
     this.filteredIngredients = new Set();
     this.btnSearch = document.querySelector("span#logo-research");
-    this.displayOnlyTenRecipes(this.recipes);
+    this.displayRecipes = modelRecipes.displayRecipes;
     this.searchInput = document.querySelector(".input-group input");
+    
   }
 
   /**
@@ -40,90 +41,43 @@ class FilterForm {
       ulElement.appendChild(liElt);
     });
   }
-  /**
-   * Affiche une recette dans le conteneur spécifié.
-   * @param {Object} recipe - La recette à afficher.
-   * @memberof FilterForm
-   */
-  displayRecipeModel(recipe) {
-    const { name, description, ingredients, image } = recipe;
-    const recipeCard = new FactoryCard(this.recipeContainer);
-    const imagePath = `./assets/images/recipes/${image}`;
-    recipeCard.renderCard(name, description, ingredients, imagePath);
-  }
-
-  /**
-   * Affiche les recettes dans le conteneur spécifié.
-   * @param {Array<Object>} array - Liste des recettes à afficher.
-   * @memberof FilterForm
-   */
-  displayOnlyTenRecipes(array) {
-    this.recipeContainer.innerHTML = "";
-    array.slice(0, 10).forEach((recipe) => {
-      this.displayRecipeModel(recipe);
-    });
-  }
-  displayAllRecipes(array) {
-    this.recipeContainer.innerHTML = "";
-    array.forEach((recipe) => {
-      this.displayRecipeModel(recipe);
-    });
-  }
-  displaySearchRecipes(array) {
-    this.recipeContainer.innerHTML = "";
-    array.forEach((recipe) => {
-      this.displayRecipeModel(recipe);
-    });
-  }
-
-  /**
-   * Affiche les recettes filtrées dans le conteneur spécifié.
-   * @param {Array<Object>} array - Liste des recettes filtrées à afficher.
-   * @memberof FilterForm
-   */
-  displayNewRecipes(array) {
-    this.recipeContainer.innerHTML = "";
-    array.forEach((recipe) => {
-      this.displayRecipeModel(recipe);
-    });
-  }
 
   /**
    * Compare l'input utilisateur au dela de 3 characteres entrées et affiche un message d 'erreur si aucune terme n 'est trouvé.
    * @memberof FilterForm
    */
-  compareInputResult() {
-    this.searchInput.addEventListener("keyup", (e) => {
-      const query = this.searchInput.value.trim().toLowerCase();
-      if (query.length >= 3) {
-        // Filtrer les recettes en fonction de la recherche
-        const filteredRecipes = this.recipes.filter((recipe) => {
-          // Vérifier si le terme de recherche est présent dans le nom, la description ou les ingrédients de la recette
-          return this.compareJSON(recipe, query);
-        });
-        // Afficher les nouvelles recettes filtrées
-        if (filteredRecipes.length === 0) {
-          this.recipeContainer.innerHTML = `<div class="container">
-            <div class="row">
-              <div class="col">
-                <div class="mx-auto text-center style="font-family: 'Roboto', sans-serif;"">
-                  <h2 class=" m-4">Il n'y a pas de termes contenant ces recettes</h2>
-                  <h3 class="m-4"> Veuillez choisir un autre filtre, ingrédient ou ustensil.<br>
-                  <p class="m-2">Merci.</p>
+
+  compareResult() {
+    this.query = this.searchInput.value.trim().toLowerCase();
+    if (this.query.length >= 3) {
+      // Filtrer les recettes en fonction de la recherche
+      const filteredRecipes = this.recipes.filter((recipe) => {
+        // Vérifier si le terme de recherche est présent dans le nom, la description ou les ingrédients de la recette
+        return this.compareJSON(recipe, this.query);
+      });
+      // Afficher les nouvelles recettes filtrées
+      if (filteredRecipes.length === 0) {
+        this.recipeContainer.innerHTML = `<div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="mx-auto text-center style="font-family: 'Roboto', sans-serif;"">
+                    <h2 class=" m-4">  Aucune recette ne contient ${this.query} </h2>
+                    <h3 class="m-4"> vous pouvez chercher «
+                    tarte aux pommes », « poisson »<br>
+                    <p class="m-2">Merci.</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>`;
-        } else {
-          // Afficher les nouvelles recettes filtrées
-          this.displaySearchRecipes(filteredRecipes);
-          this.renderTotal(filteredRecipes);
-        }
-      } else if (query.length === 0) {
-        this.displayAllRecipes(this.recipes);
-        this.renderTotal(this.recipes);
+            </div>`;
+      } else {
+        // Afficher les nouvelles recettes filtrées
+        this.displayRecipes(filteredRecipes);
+        this.renderTotal(filteredRecipes);
       }
-    });
+    } else if (this.query.length === 0) {
+      this.displayRecipes(this.recipes);
+      this.renderTotal(this.recipes);
+    }
   }
 
   /**
@@ -174,6 +128,7 @@ class FilterForm {
     // On vide le contenu de la sélection de filtres
     ulElementWrapper.innerHTML = "";
     filtersElement.addEventListener("click", (e) => {
+      this.itemActive = e.target;
       this.selectedItem = e.target.textContent;
 
       this.parentElementSelectedItem = e.target.parentNode.parentNode;
@@ -184,10 +139,20 @@ class FilterForm {
           this.parentElementSelectedItembrother.classList.length - 2
         ];
 
+      this.parentSelected = e.target.parentNode;
+      this.parentSelectedbro = this.parentSelected.previousElementSibling;
+     
+
+      this.parentSelectedbro.innerHTML = `<li class="activeFilter">${this.selectedItem}</li>`;
+      // console.log(this.itemActive);
+ 
+      //creation dans le filtre des séléctions en dessous
+      
       ulElementWrapper.innerHTML += `<li class="btn-filter">${this.selectedItem}<span>
             <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
       ulElementWrapper.classList.add("active");
 
+      this.itemActive.remove(this.parentElementSelectedItembrother);
       this.filterSelection();
     });
 
@@ -196,7 +161,7 @@ class FilterForm {
       if (e.target.tagName === "IMG") {
         // Supprimez l'élément de filtre parent de l'image cliquée
         e.target.closest(".btn-filter").remove();
-        this.displayAllRecipes(this.recipes);
+        this.displayRecipes(this.recipes);
         this.renderTotal(this.recipes);
         if (ulElementWrapper.innerHTML === "") {
           ulElementWrapper.classList.remove("active");
@@ -222,7 +187,7 @@ class FilterForm {
           const checkIngredient = recipe.ingredients.some((ingredient) =>
             ingredient.ingredient.toLowerCase().includes(resultatfiltre)
           );
-          console.log(checkIngredient);
+
           return checkIngredient;
         } else if (resultatclasse === "ustensils") {
           const checkUstensil = recipe.ustensils.some((ustensil) =>
@@ -237,12 +202,12 @@ class FilterForm {
         }
       });
     });
-    this.displayNewRecipes(this.recipesFiltered);
+    this.displayRecipes(this.recipesFiltered);
     this.renderTotal(this.recipesFiltered);
   }
 
   /**
-   * verifie entrée utilisateur des filtres 
+   * verifie entrée utilisateur des filtres
    *
    * @param {*} input
    * @param {*} dataSet
@@ -288,7 +253,17 @@ class FilterForm {
   renderFilters() {
     // tableau d initialisation des datas
     this.initializeData();
-    this.compareInputResult();
+
+    this.searchInput.addEventListener("keyup", (e) => {
+      this.compareResult();
+    });
+
+    this.btnSearch.addEventListener("click", () => {
+      this.selectedFilters.innerHTML += `<li class="btn-filter">${this.query}<span>
+            <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
+      this.selectedFilters.classList.add("active");
+    });
+
     // déclaration des appels de rendu filtres
     this.renderFilterModel(this.filterWrapperulIng, this.ingredients);
     this.renderFilterModel(this.filterWrapperulApp, this.appliances);

@@ -7,12 +7,13 @@ class FactoryCard {
    * Crée une instance de FactoryCard.
    * @param {HTMLElement} recipeContainer - Conteneur où les cartes de recettes seront ajoutées.
    */
-  constructor(recipeContainer) {
+  constructor(recipeContainer, recipes) {
     /**
      * Conteneur où les cartes de recettes seront ajoutées.
      * @type {HTMLElement}
      */
     this.recipeContainer = recipeContainer;
+    this.recipes = recipes;
   }
   /**
    * Crée un élément div pour envelopper la carte de recette.
@@ -118,12 +119,17 @@ class FactoryCard {
     return cardIngredients;
   }
 
-  renderCard(name, description, ingredients, imagePath) {
+  renderCard(name, description, ingredients, imagePath, time) {
     const div = this.createDivCol();
     const wrapper = this.createWrapper();
     const article = this.createArticle();
+    const p = document.createElement('p');
     const img = this.createImage(imagePath);
+    
+    p.textContent = `${time}mins`;
+    p.classList.add("time");
     article.appendChild(img);
+    article.appendChild(p);
     const headerDiv = this.createHeader(name);
     wrapper.appendChild(headerDiv);
     const bodyDiv = this.createBody(description);
@@ -135,5 +141,5 @@ class FactoryCard {
     this.recipeContainer.appendChild(div);
   }
 
-  
+
 }

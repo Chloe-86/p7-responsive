@@ -5,6 +5,10 @@
 .selected-filter {
   display: none;
 }
+.activeFilter{
+  background-color: $color-yellow;
+  padding-bottom: 30px;
+}
 .selected-filter.active {
   display: block;
   margin-bottom: 25px;
@@ -113,8 +117,14 @@
     border-color: $color-lightgrey;
     outline: none;
   }
-  ul {
+  ul{
     padding-left: unset;
+  }
+  .filter-list-item{
+    
+    overflow-y: scroll;
+    height: 260px;
+    scrollbar-width: none;
   }
   li {
     list-style-type: none;
@@ -130,8 +140,8 @@
   .dropdown-menu {
     border-radius: 11px;
     position: relative;
-    height: 315px;
-    overflow: hidden;
+    // height: 315px;
+    // overflow: hidden;
 
 
     .filterListItems{

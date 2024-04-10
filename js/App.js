@@ -25,7 +25,7 @@ class App {
      */
     async start() {
             this.recipes = await this.fetchRecipes();
-            this.Filters(this.recipes);
+            this.Renders(this.recipes);
     }
 
     /**
@@ -41,8 +41,10 @@ class App {
      * Affiche et configure les filtres pour les recettes.
      * @param {Array<Object>} recipes - Liste des recettes à filtrer.
      */
-    Filters() {
-        const filterForm = new FilterForm(this.recipes, this.recipeContainer);
+    Renders() {
+        const modelRecipes = new ModelRecipes(this.recipes, this.recipeContainer);
+        modelRecipes.displayRecipes(this.recipes);
+        const filterForm = new FilterForm(this.recipes, this.recipeContainer, modelRecipes);
         filterForm.renderFilters();
     }
 }
