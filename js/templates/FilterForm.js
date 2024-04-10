@@ -1,6 +1,5 @@
 /**
  * Cette classe permets d'afficher les filtres et de filtrer les cartes.
- *
  * @class FilterForm
  */
 class FilterForm {
@@ -22,17 +21,13 @@ class FilterForm {
     this.applianceSet = new Set();
     this.ustensilsSet = new Set();
     this.filteredIngredients = new Set();
-    this.input = document.querySelector(".input-group input");
     this.btnSearch = document.querySelector("span#logo-research");
     this.displayOnlyTenRecipes(this.recipes);
+    this.searchInput = document.querySelector(".input-group input");
   }
 
-  compareJSON(jsonObject, searchTerm) {
-    return JSON.stringify(jsonObject).includes(searchTerm);
-  }
   /**
    *Modele creation et afficher les elements de filtres dans chaque filtre
-   *
    * @param {HTMLElement} ulElement- L'élément UL (ing, app, ust).
    * @param {Array<string} dataSet - Les données du tableau en question.
    * @memberof FilterForm
@@ -47,7 +42,6 @@ class FilterForm {
   }
   /**
    * Affiche une recette dans le conteneur spécifié.
-   *
    * @param {Object} recipe - La recette à afficher.
    * @memberof FilterForm
    */
@@ -60,7 +54,6 @@ class FilterForm {
 
   /**
    * Affiche les recettes dans le conteneur spécifié.
-   *
    * @param {Array<Object>} array - Liste des recettes à afficher.
    * @memberof FilterForm
    */
@@ -85,7 +78,6 @@ class FilterForm {
 
   /**
    * Affiche les recettes filtrées dans le conteneur spécifié.
-   *
    * @param {Array<Object>} array - Liste des recettes filtrées à afficher.
    * @memberof FilterForm
    */
@@ -96,38 +88,62 @@ class FilterForm {
     });
   }
 
+  /**
+   * Compare l'input utilisateur au dela de 3 characteres entrées et affiche un message d 'erreur si aucune terme n 'est trouvé.
+   * @memberof FilterForm
+   */
   compareInputResult() {
-    this.btnSearch.addEventListener("click", (e) => {
-      const inputSearchHeader = this.input.value.trim().toLowerCase();
-      // Filtrer les recettes en fonction de la recherche
-      const filteredRecipes = this.recipes.filter((recipe) => {
-        // Vérifier si le terme de recherche est présent dans la recette
-        this.result = this.compareJSON(recipe, inputSearchHeader);
-        return this.result;
-      });
-      // Afficher les nouvelles recettes filtrées
-      if (filteredRecipes.length === 0) {
-        this.recipeContainer.innerHTML= `<div class="container">
-        <div class="row">
-          <div class="col">
-            <div class="mx-auto text-center style="font-family: 'Roboto', sans-serif;"">
-            <h2 class=" m-4">Il n'y a pas de termes contenant ces recettes<h2>
-            <h3 class="m-4"> Veuillez choisir un autre filtre, ingrédient ou ustensil.<br>
-            <p class="m-2">Merci.<p></div>
-          </div>
-        </div>
-      </div>`
-      } else {
+    this.searchInput.addEventListener("keyup", (e) => {
+      const query = this.searchInput.value.trim().toLowerCase();
+      if (query.length >= 3) {
+        // Filtrer les recettes en fonction de la recherche
+        const filteredRecipes = this.recipes.filter((recipe) => {
+          // Vérifier si le terme de recherche est présent dans le nom, la description ou les ingrédients de la recette
+          return this.compareJSON(recipe, query);
+        });
         // Afficher les nouvelles recettes filtrées
-        this.displaySearchRecipes(filteredRecipes);
-        this.renderTotal(filteredRecipes)
+        if (filteredRecipes.length === 0) {
+          this.recipeContainer.innerHTML = `<div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="mx-auto text-center style="font-family: 'Roboto', sans-serif;"">
+                  <h2 class=" m-4">Il n'y a pas de termes contenant ces recettes</h2>
+                  <h3 class="m-4"> Veuillez choisir un autre filtre, ingrédient ou ustensil.<br>
+                  <p class="m-2">Merci.</p>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        } else {
+          // Afficher les nouvelles recettes filtrées
+          this.displaySearchRecipes(filteredRecipes);
+          this.renderTotal(filteredRecipes);
+        }
+      } else if (query.length === 0) {
+        this.displayAllRecipes(this.recipes);
+        this.renderTotal(this.recipes);
       }
     });
   }
 
   /**
+   * Compare la recherche utilisateur au titre , description, et ingredients
+   * @param {Array<Object} recipe-l'objet de recherche
+   * @param {*} query-recherche de l 'utilisateur
+   * @memberof FilterForm
+   */
+  compareJSON(recipe, query) {
+    // Vérifier si le terme de recherche est présent dans le nom, la description ou les ingrédients de la recette
+    const matchName = recipe.name.toLowerCase().includes(query);
+    const matchDescription = recipe.description.toLowerCase().includes(query);
+    const matchIngredients = recipe.ingredients.some((ingredient) =>
+      ingredient.ingredient.toLowerCase().includes(query)
+    );
+    return matchName || matchDescription || matchIngredients;
+  }
+
+  /**
    * Création de 3 tableaux differents contenant les élèments.
-   *
    * @memberof FilterForm
    */
   initializeData() {
@@ -150,8 +166,7 @@ class FilterForm {
    * Permets d 'extraire les filtres et les mettre en dessous pour les garder visuellement en mémoire pour l'utilisateur
    *
    * @param {HTMLElement} ulElementWrapper- L'élément UL où les filtres sélectionnés seront affichés.
-   * @param {*} filtersElement- Le filtre en question
-   *    * @param {*} ulElement- Le filtre ou on selectionne les elements que l'on filtrera
+   * @param {HTMLElement} filtersElement- Le filtre en question
    * @memberof FilterForm
    */
 
@@ -175,7 +190,7 @@ class FilterForm {
 
       this.filterSelection();
     });
-    // Ajoutez un gestionnaire d'événements pour les clics sur les boutons de suppression des filtres
+
     ulElementWrapper.addEventListener("click", (e) => {
       // Vérifiez si l'élément cliqué est un bouton de suppression (balise <img>)
       if (e.target.tagName === "IMG") {
@@ -192,7 +207,6 @@ class FilterForm {
 
   /**
    * Récupere le contenu des recettes et verifie les termes pour chaque filtre de sélection avec le terme selectionné.
-   *
    * @memberof FilterForm
    */
   filterSelection() {
@@ -203,7 +217,7 @@ class FilterForm {
 
       const resultatclasse = this.eltClass;
 
-      this.recipesWithSpecificClass = this.recipes.filter((recipe) => {
+      this.recipesFiltered = this.recipes.filter((recipe) => {
         if (resultatclasse === "ingredients") {
           const checkIngredient = recipe.ingredients.some((ingredient) =>
             ingredient.ingredient.toLowerCase().includes(resultatfiltre)
@@ -223,10 +237,18 @@ class FilterForm {
         }
       });
     });
-    this.displayNewRecipes(this.recipesWithSpecificClass);
-    this.renderTotal(this.recipesWithSpecificClass);
+    this.displayNewRecipes(this.recipesFiltered);
+    this.renderTotal(this.recipesFiltered);
   }
 
+  /**
+   * verifie entrée utilisateur des filtres 
+   *
+   * @param {*} input
+   * @param {*} dataSet
+   * @param {*} filterWrapper
+   * @memberof FilterForm
+   */
   onSearch(input, dataSet, filterWrapper) {
     input.addEventListener("keyup", (e) => {
       const query = e.target.value.toLowerCase();
@@ -263,7 +285,6 @@ class FilterForm {
    *
    * @memberof FilterForm
    */
-
   renderFilters() {
     // tableau d initialisation des datas
     this.initializeData();

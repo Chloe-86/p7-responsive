@@ -134,4 +134,6 @@ class FactoryCard {
     div.appendChild(article);
     this.recipeContainer.appendChild(div);
   }
+
+  
 }
