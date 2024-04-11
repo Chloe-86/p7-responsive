@@ -24,7 +24,8 @@ class FilterForm {
     this.btnSearch = document.querySelector("span#logo-research");
     this.displayRecipes = modelRecipes.displayRecipes;
     this.searchInput = document.querySelector(".input-group input");
-    
+    this.recipeFilterTemp = [];
+    this.arrayFilter = [];
   }
 
   /**
@@ -141,19 +142,21 @@ class FilterForm {
 
       this.parentSelected = e.target.parentNode;
       this.parentSelectedbro = this.parentSelected.previousElementSibling;
-     
 
       this.parentSelectedbro.innerHTML = `<li class="activeFilter">${this.selectedItem}</li>`;
-      // console.log(this.itemActive);
- 
+
+
       //creation dans le filtre des séléctions en dessous
-      
+
       ulElementWrapper.innerHTML += `<li class="btn-filter">${this.selectedItem}<span>
             <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
       ulElementWrapper.classList.add("active");
 
       this.itemActive.remove(this.parentElementSelectedItembrother);
-      this.filterSelection();
+
+      this.arrayFilter.push(this.selectedItem);
+
+      this.filterSelection(this.recipes);
     });
 
     ulElementWrapper.addEventListener("click", (e) => {
@@ -161,7 +164,17 @@ class FilterForm {
       if (e.target.tagName === "IMG") {
         // Supprimez l'élément de filtre parent de l'image cliquée
         e.target.closest(".btn-filter").remove();
-        this.displayRecipes(this.recipes);
+        this.eltActive = e.target
+          .closest(".btn-filter")
+          .textContent.trim()
+          .toLowerCase();
+        this.arrayFilter = this.arrayFilter.filter(
+          (element) => element !== this.eltActive
+        );
+        if(this.arrayFilter = []){
+          this.displayRecipes(this.recipes);
+        }
+
         this.renderTotal(this.recipes);
         if (ulElementWrapper.innerHTML === "") {
           ulElementWrapper.classList.remove("active");
@@ -175,37 +188,33 @@ class FilterForm {
    * @memberof FilterForm
    */
   filterSelection() {
-    const filtres = document.querySelectorAll(".btn-filter");
-
-    filtres.forEach((filtre) => {
-      const resultatfiltre = filtre.textContent.trim().toLowerCase();
-
+    this.arrayFilter.forEach((filter) => {
       const resultatclasse = this.eltClass;
 
       this.recipesFiltered = this.recipes.filter((recipe) => {
         if (resultatclasse === "ingredients") {
-          const checkIngredient = recipe.ingredients.some((ingredient) =>
-            ingredient.ingredient.toLowerCase().includes(resultatfiltre)
+          const checkIngredient = recipe.ingredients.some((ingredients) =>
+            ingredients.ingredient.toLowerCase().includes(filter)
           );
 
           return checkIngredient;
         } else if (resultatclasse === "ustensils") {
-          const checkUstensil = recipe.ustensils.some((ustensil) =>
-            ustensil.toLowerCase().includes(resultatfiltre)
+          const checkUstensil = recipe.ustensils.some((ustensils) =>
+            ustensils.toLowerCase().includes(filter)
           );
           return checkUstensil;
         } else if (resultatclasse === "appliances") {
           const checkAppliance = recipe.appliance
             .toLowerCase()
-            .includes(resultatfiltre);
+            .includes(filter);
           return checkAppliance;
         }
       });
-    });
-    this.displayRecipes(this.recipesFiltered);
-    this.renderTotal(this.recipesFiltered);
-  }
 
+      this.displayRecipes(this.recipesFiltered);
+      this.renderTotal(this.recipesFiltered);
+    });
+  }
   /**
    * verifie entrée utilisateur des filtres
    *
