@@ -13,6 +13,7 @@ class FilterForm {
     this.filterWrapperulIng = document.querySelector("#ingredients");
     this.selectedFilters = document.querySelector(".selectedFilters ul");
     this.filterListItem = document.querySelector(".filter-list-item ul");
+    this.selectElt = document.querySelectorAll(".select-element");
     this.filterWrapperulApp = document.querySelector("#appliance");
     this.filterWrapperulUst = document.querySelector("#ustensils");
     this.totalRecipes = document.querySelector(".filter-right p");
@@ -47,10 +48,16 @@ class FilterForm {
   }
 
   addActiveFilterModel(wrapper, text) {
-    return (wrapper.innerHTML = text);
+    return (wrapper.innerHTML += text);
   }
   removeActiveFilterModel(wrapper, elt) {
     return wrapper.remove(elt);
+  }
+  findGrandPa(target) {
+    return (this.grandPaElt = target.parentNode.parentNode);
+  }
+  findArPa(target) {
+    return (this.arPaElt = target.parentNode.parentNode.parentNode);
   }
 
   /**
@@ -154,7 +161,6 @@ class FilterForm {
    * @memberof FilterForm
    */
 
-
   onClick(ulElementWrapper, filtersElement) {
     // On vide le contenu de la sélection de filtres
     ulElementWrapper.innerHTML = "";
@@ -162,31 +168,33 @@ class FilterForm {
       this.itemActive = e.target;
       this.selectedItem = e.target.textContent;
 
-      this.parentElementSelectedItem = e.target.parentNode.parentNode;
-      this.parentElementSelectedItembrother =
-        this.parentElementSelectedItem.previousElementSibling;
-      this.eltClass =
-        this.parentElementSelectedItembrother.classList[
-          this.parentElementSelectedItembrother.classList.length - 2
+      // this.paEltSelectItem = e.target.parentNode.parentNode;
+      // this.paEltSelectItembro = this.paEltSelectItem.previousElementSibling;
+      // this.eltClass =
+      //   this.paEltSelectItembro.classList[
+      //     this.paEltSelectItembro.classList.length - 2
+      //   ];
+      this.findGrandPa(e.target);
+      this.paEltSelectItembro =
+        this.grandPaElt.previousElementSibling.classList[
+          this.grandPaElt.previousElementSibling.classList.length - 2
         ];
 
       this.parentSelected = e.target.parentNode;
       this.parentSelectedbro = this.parentSelected.previousElementSibling;
 
+      console.log(this.parentSelected.id);
       this.addActiveFilterModel(
         this.parentSelectedbro,
-        `<li class="activeFilter">${this.selectedItem}</li>`
+        `<li class="activeFilter" id="${this.parentSelected.id}">${this.selectedItem}</li>`
       );
-      //creation dans le filtre des séléctions en dessous
 
-      ulElementWrapper.innerHTML += `<li class="btn-filter">${this.selectedItem}<span>
+      //creation dans le filtre des séléctions en dessous
+      ulElementWrapper.innerHTML += `<li class="btn-filter" id="${this.parentSelected.id}">${this.selectedItem}<span>
             <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
       ulElementWrapper.classList.add("active");
 
-      this.removeActiveFilterModel(
-        this.itemActive,
-        this.parentElementSelectedItembrother
-      );
+      this.removeActiveFilterModel(this.itemActive, this.paEltSelectItembro);
 
       this.arrayFilter.push(this.selectedItem);
 
@@ -196,25 +204,34 @@ class FilterForm {
     ulElementWrapper.addEventListener("click", (e) => {
       // Vérifiez si l'élément cliqué est un bouton de suppression (balise <img>)
       if (e.target.tagName === "IMG") {
-        
+        this.btnFilterClosest = e.target.closest(".btn-filter");
         // Supprimez l'élément de filtre parent de l'image cliquée
-        e.target.closest(".btn-filter").remove();
-        this.eltActive = e.target
-          .closest(".btn-filter")
-          .textContent.trim()
-          .toLowerCase();
+        this.btnFilterClosest.remove();
+        this.eltActive = this.btnFilterClosest.textContent.trim().toLowerCase();
         this.arrayFilter = this.arrayFilter.filter(
           (element) => element !== this.eltActive
         );
-        if ((this.arrayFilter = [])) {
+
+        //si vide afficher toutes les recettes et le rendu total
+        if (this.arrayFilter.length == "") {
           this.displayRecipes(this.recipes);
+          this.renderTotal(this.recipes);
         }
 
-        this.renderTotal(this.recipes);
         if (ulElementWrapper.innerHTML === "") {
           ulElementWrapper.classList.remove("active");
         }
+        this.filterSelection(this.recipes);
       }
+
+      this.resultClass = this.btnFilterClosest.id;
+      console.log(this.resultClass);
+
+      this.selectElt.forEach((element) => {
+        if (element.classList.contains(this.resultClass)) {
+          this.removeActiveFilterModel(element, "");
+        }
+      });
     });
   }
 
