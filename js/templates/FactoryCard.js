@@ -125,7 +125,6 @@ class FactoryCard {
     const article = this.createArticle();
     const p = document.createElement('p');
     const img = this.createImage(imagePath);
-    
     p.textContent = `${time}mins`;
     p.classList.add("time");
     article.appendChild(img);

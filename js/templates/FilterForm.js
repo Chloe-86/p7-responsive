@@ -15,7 +15,7 @@ class FilterForm {
     this.filterListItem = document.querySelector(".filter-list-item ul");
     this.filterWrapperulApp = document.querySelector("#appliance");
     this.filterWrapperulUst = document.querySelector("#ustensils");
-    this.totalRecipes = document.querySelector(".filter-right span");
+    this.totalRecipes = document.querySelector(".filter-right p");
     this.inputs = document.querySelectorAll("input.search");
     this.ingredientsSet = new Set();
     this.applianceSet = new Set();
@@ -26,6 +26,9 @@ class FilterForm {
     this.searchInput = document.querySelector(".input-group input");
     this.recipeFilterTemp = [];
     this.arrayFilter = [];
+    this.count = 0;
+    this.inputError;
+    this.selectError;
   }
 
   /**
@@ -43,11 +46,48 @@ class FilterForm {
     });
   }
 
+  addActiveFilterModel(wrapper, text) {
+    return (wrapper.innerHTML = text);
+  }
+  removeActiveFilterModel(wrapper, elt) {
+    return wrapper.remove(elt);
+  }
+
+  /**
+   * Affiche un message d'erreur si rien n est trouve avec les 2 cas en fonction de l'inputsearch ou des filtres sélectionés.
+   *
+   * @memberof FilterForm
+   */
+  errorMessage(error) {
+    let message = ""; // Message d'erreur par défaut
+    let message2 = "";
+    if (error === "inputError") {
+      // Cas où aucun résultat n'est trouvé pour la recherche utilisateur
+      message = `<h2 class="m-4">Aucune recette ne contient "${this.query}".</h2>`;
+      message2 = `Vous pouvez chercher « tarte aux pommes », « poisson ».`;
+    } else if (error === "selectError") {
+      // Cas où aucun résultat n'est trouvé pour les filtres sélectionnés
+      message = `<h2 class="m-4">Aucune recette ne correspond aux filtres sélectionnés.</h2>`;
+      message2 = `Vous pouvez sélectionner un autre filtre.`;
+    }
+
+    this.recipeContainer.innerHTML = `
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="mx-auto text-center" style="font-family: 'Roboto', sans-serif;">
+                        ${message}
+                        <h3 class="m-4">${message2}<br>Merci.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+  }
+
   /**
    * Compare l'input utilisateur au dela de 3 characteres entrées et affiche un message d 'erreur si aucune terme n 'est trouvé.
    * @memberof FilterForm
    */
-
   compareResult() {
     this.query = this.searchInput.value.trim().toLowerCase();
     if (this.query.length >= 3) {
@@ -58,18 +98,7 @@ class FilterForm {
       });
       // Afficher les nouvelles recettes filtrées
       if (filteredRecipes.length === 0) {
-        this.recipeContainer.innerHTML = `<div class="container">
-              <div class="row">
-                <div class="col">
-                  <div class="mx-auto text-center style="font-family: 'Roboto', sans-serif;"">
-                    <h2 class=" m-4">  Aucune recette ne contient ${this.query} </h2>
-                    <h3 class="m-4"> vous pouvez chercher «
-                    tarte aux pommes », « poisson »<br>
-                    <p class="m-2">Merci.</p>
-                  </div>
-                </div>
-              </div>
-            </div>`;
+        this.errorMessage("inputError");
       } else {
         // Afficher les nouvelles recettes filtrées
         this.displayRecipes(filteredRecipes);
@@ -125,6 +154,7 @@ class FilterForm {
    * @memberof FilterForm
    */
 
+
   onClick(ulElementWrapper, filtersElement) {
     // On vide le contenu de la sélection de filtres
     ulElementWrapper.innerHTML = "";
@@ -143,16 +173,20 @@ class FilterForm {
       this.parentSelected = e.target.parentNode;
       this.parentSelectedbro = this.parentSelected.previousElementSibling;
 
-      this.parentSelectedbro.innerHTML = `<li class="activeFilter">${this.selectedItem}</li>`;
-
-
+      this.addActiveFilterModel(
+        this.parentSelectedbro,
+        `<li class="activeFilter">${this.selectedItem}</li>`
+      );
       //creation dans le filtre des séléctions en dessous
 
       ulElementWrapper.innerHTML += `<li class="btn-filter">${this.selectedItem}<span>
             <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
       ulElementWrapper.classList.add("active");
 
-      this.itemActive.remove(this.parentElementSelectedItembrother);
+      this.removeActiveFilterModel(
+        this.itemActive,
+        this.parentElementSelectedItembrother
+      );
 
       this.arrayFilter.push(this.selectedItem);
 
@@ -162,6 +196,7 @@ class FilterForm {
     ulElementWrapper.addEventListener("click", (e) => {
       // Vérifiez si l'élément cliqué est un bouton de suppression (balise <img>)
       if (e.target.tagName === "IMG") {
+        
         // Supprimez l'élément de filtre parent de l'image cliquée
         e.target.closest(".btn-filter").remove();
         this.eltActive = e.target
@@ -171,7 +206,7 @@ class FilterForm {
         this.arrayFilter = this.arrayFilter.filter(
           (element) => element !== this.eltActive
         );
-        if(this.arrayFilter = []){
+        if ((this.arrayFilter = [])) {
           this.displayRecipes(this.recipes);
         }
 
@@ -187,39 +222,40 @@ class FilterForm {
    * Récupere le contenu des recettes et verifie les termes pour chaque filtre de sélection avec le terme selectionné.
    * @memberof FilterForm
    */
+
   filterSelection() {
-    this.arrayFilter.forEach((filter) => {
-      const resultatclasse = this.eltClass;
+    this.recipesFiltered = this.recipes.filter((recipe) => {
+      // Vérifier si chaque filtre est présent dans la recette
+      const match = this.arrayFilter.every(
+        (filter) =>
+          recipe.ingredients.some((ingredient) =>
+            ingredient.ingredient.toLowerCase().includes(filter.toLowerCase())
+          ) ||
+          recipe.ustensils.some((ustensil) =>
+            ustensil.toLowerCase().includes(filter.toLowerCase())
+          ) ||
+          recipe.appliance.toLowerCase().includes(filter.toLowerCase())
+      );
 
-      this.recipesFiltered = this.recipes.filter((recipe) => {
-        if (resultatclasse === "ingredients") {
-          const checkIngredient = recipe.ingredients.some((ingredients) =>
-            ingredients.ingredient.toLowerCase().includes(filter)
-          );
+      // Retourner true si tous les filtres sont présents dans la recette
+      return match;
+    });
 
-          return checkIngredient;
-        } else if (resultatclasse === "ustensils") {
-          const checkUstensil = recipe.ustensils.some((ustensils) =>
-            ustensils.toLowerCase().includes(filter)
-          );
-          return checkUstensil;
-        } else if (resultatclasse === "appliances") {
-          const checkAppliance = recipe.appliance
-            .toLowerCase()
-            .includes(filter);
-          return checkAppliance;
-        }
-      });
-
+    // Si aucune recette ne correspond aux filtres, afficher un message d'erreur
+    if (this.recipesFiltered.length === 0) {
+      this.errorMessage("selectError");
+    } else {
+      // Afficher les recettes filtrées et mettre à jour le total
       this.displayRecipes(this.recipesFiltered);
       this.renderTotal(this.recipesFiltered);
-    });
+    }
   }
+
   /**
    * verifie entrée utilisateur des filtres
    *
    * @param {*} input
-   * @param {*} dataSet
+   * @param {} dataSet
    * @param {*} filterWrapper
    * @memberof FilterForm
    */
@@ -245,12 +281,18 @@ class FilterForm {
   /**
    * Cette méthode met à jour l'affichage du nombre total de recettes dans l'interface utilisateur.
    *
-   * @param {Number} total
+   * @param {array} --le tableau de recette filtré ou pas
    * @memberof FilterForm
    */
   renderTotal(array) {
-    let total = array.length; // Mettre à jour le total en utilisant le tableau passé en argument
-    this.totalRecipes.textContent = total; // Ajouter le total en tant que texte
+    let total = array.length;
+
+    if (total === 1) {
+      this.totalRecipes.innerHTML = `<span>${total}</span> recette`;
+    } else if (total > 1) {
+      this.totalRecipes.innerHTML = `<span>${total}</span> recettes`;
+    }
+
     return total; // Renvoyer le total mis à jour si nécessaire
   }
 
