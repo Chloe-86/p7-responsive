@@ -5,9 +5,16 @@
 .selected-filter {
   display: none;
 }
-.activeFilter{
+.li-item{
   background-color: $color-yellow;
   padding-bottom: 30px;
+  position: relative;
+  span img{
+    cursor:pointer;
+    position: absolute;
+    right: 10px;
+
+  }
 }
 .selected-filter.active {
   display: block;
@@ -55,7 +62,7 @@
 .filter {
   position: relative;
 
-  img {
+  img.fleche {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
