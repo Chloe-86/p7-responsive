@@ -43,13 +43,10 @@ class FilterForm {
    */
   renderFilterModel(ulElement, dataSet) {
     ulElement.innerHTML = "";
-    let index = 0;
     dataSet.forEach((item) => {
       const liElt = document.createElement("li");
       liElt.textContent = item.toLowerCase();
-      liElt.setAttribute('data-id', index);
       ulElement.appendChild(liElt);
-      index++;
     });
   }
 
@@ -167,6 +164,84 @@ class FilterForm {
    * @memberof FilterForm
    */
 
+  // onClick(ulElementWrapper, filtersElement, wrapperElt) {
+  //   // On vide le contenu de la sélection de filtres
+  //   ulElementWrapper.innerHTML = "";
+  //   wrapperElt.addEventListener("click", (e) => {
+  //     filtersElement.forEach((element) => {
+  //       if (element) {
+  //         this.itemActive = e.target;
+  //         this.parentSelected = e.target.parentNode;
+
+  //         this.selectedItem = e.target.textContent;
+  //         if (this.parentSelected){
+
+  //         //recupere la classe de l'element parent
+  //         this.findGrandPa(e.target);
+
+  //         this.paEltSelectItembro =
+  //           this.grandPaElt.previousElementSibling.classList[
+  //             this.grandPaElt.previousElementSibling.classList.length - 2
+  //           ];
+
+  //           this.parentSelectedbro = this.parentSelected.previousElementSibling;
+  //         }
+
+  //         this.addActiveFilterModel(
+  //           this.parentSelectedbro,
+  //           `<li class="activeFilter" id="${this.parentSelected.id}">${this.selectedItem}</li>`
+  //         );
+
+  //         //creation dans le filtre des séléctions en dessous
+  //         ulElementWrapper.innerHTML += `<li class="btn-filter" id="${this.parentSelected.id}">${this.selectedItem}<span>
+  //             <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
+  //         ulElementWrapper.classList.add("active");
+  //         this.removeActiveFilterModel(
+  //           this.itemActive,
+  //           this.paEltSelectItembro
+  //         );
+
+  //         //push dans un tableau quui permets de filtrer les recettes
+  //         this.arrayFilter.push(this.selectedItem);
+  //         this.filterSelection(this.recipes);
+  //       }
+  //     });
+  //   });
+
+  //   ulElementWrapper.addEventListener("click", (e) => {
+  //     // Vérifiez si l'élément cliqué est un bouton de suppression (balise <img>)
+  //     if (e.target.tagName === "IMG") {
+  //       this.btnFilterClosest = e.target.closest(".btn-filter");
+  //       // Supprimez l'élément de filtre parent de l'image cliquée
+  //       this.btnFilterClosest.remove();
+  //       this.eltActive = this.btnFilterClosest.textContent.trim().toLowerCase();
+  //       this.arrayFilter = this.arrayFilter.filter(
+  //         (element) => element !== this.eltActive
+  //       );
+
+  //       //si vide afficher toutes les recettes et le rendu total
+  //       if (this.arrayFilter.length == "") {
+  //         this.displayRecipes(this.recipes);
+  //         this.renderTotal(this.recipes);
+  //       }
+
+  //       if (ulElementWrapper.innerHTML === "") {
+  //         ulElementWrapper.classList.remove("active");
+  //       }
+  //       this.filterSelection(this.recipes);
+  //     }
+
+  //     this.resultClass = this.btnFilterClosest.id;
+
+  //     this.selectElt.forEach((element) => {
+  //       if (element.classList.contains(this.resultClass)) {
+  //         this.removeActiveFilterModel(element, "");
+  //       }
+  //     });
+  //     console.log(this.arrayFilter);
+  //   });
+  // }
+
   //autre test de reformatage
   onClick(ulElementWrapper, filtersElement, wrapperElt) {
     // On vide le contenu de la sélection de filtres
@@ -182,21 +257,7 @@ class FilterForm {
     this.onClickRemoveEvent(ulElementWrapper);
   }
 
-  onClickRemoveEvent(ulElementWrapper, dataId) {
-    // Ajouter un écouteur d'événements sur ulElementWrapper pour gérer les clics sur les boutons de suppression
-    ulElementWrapper.addEventListener("click", (e) => {
   
-      if (e.target.tagName === "IMG") {
-        this.handleRemoveButtonClick(e.target, ulElementWrapper, dataId);
-      }
-      // this.onClick(
-      //   this.selectedFilters,
-      //   document.querySelectorAll("#ingredients li"),
-      //   this.filterWrapperulIng
-      // );
-    });
-  }
-
   handleFilterClick(target, ulElementWrapper) {
     this.itemActive = target;
     this.selectedItem = target.textContent;
@@ -211,14 +272,13 @@ class FilterForm {
     this.parentSelected = target.parentNode;
     this.parentSelectedbro = this.parentSelected.previousElementSibling;
 
-    this.dataId = target.getAttribute('data-id');
     this.addActiveFilterModel(
       this.parentSelectedbro,
-      `<li class="li-item removeFilter" data-id= ${this.dataId} id="${this.parentSelected.id}">${this.selectedItem}<span><img src="./assets/svg/mini-croix.svg" alt="croix"></span></span></li>`
+      `<li class="li-item " id="${this.parentSelected.id}">${this.selectedItem}<span><img src="./assets/svg/mini-croix.svg" alt="croix"></span></span></li>`
     );
 
     // Création dans le filtre des sélections en dessous
-    ulElementWrapper.innerHTML += `<li class="btn-filter removeFilter" data-id= ${this.dataId}  id="${this.parentSelected.id}">${this.selectedItem}<span>
+    ulElementWrapper.innerHTML += `<li class="btn-filter" id="${this.parentSelected.id}">${this.selectedItem}<span>
         <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
     ulElementWrapper.classList.add("active");
 
@@ -229,12 +289,13 @@ class FilterForm {
     this.filterSelection(this.recipes);
   }
 
-  handleRemoveButtonClick(target, ulElementWrapper, dataId) {
-    const btnFilterClosest = target.closest(".removeFilter");
 
+  handleRemoveButtonClick(target, ulElementWrapper) {
+    const btnFilterClosest = target.closest(".btn-filter");
+  
     if (!btnFilterClosest) return; // Si le bouton de suppression n'est pas dans un élément .btn-filter, sortir
     const removedText = btnFilterClosest.textContent.trim().toLowerCase();
-    
+
   
     // Supprimer l'élément de filtre parent de l'image cliquée
     btnFilterClosest.remove();
@@ -258,7 +319,6 @@ class FilterForm {
     // Filtrer les recettes en fonction des filtres restants
     this.filterSelection(this.recipes);
   }
-
 
   /**
    * Récupere le contenu des recettes et verifie les termes pour chaque filtre de sélection avec le terme selectionné.
@@ -385,7 +445,7 @@ class FilterForm {
     this.selectElt.forEach(element => {
       this.onClickRemoveEvent(element);
     });
-
+    
     // Gestion des événements de filtrage pour chaque champ de recherche
     this.onSearch(this.inputs[0], this.ingredients, this.filterWrapperulIng);
     this.onSearch(this.inputs[1], this.appliances, this.filterWrapperulApp);

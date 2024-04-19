@@ -4,7 +4,8 @@
   "description": "Un site de recettes de cuisine",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch ./sass/main.scss:./css/style.css"
+    "sass": "sass --watch ./sass/main.scss:./css/style.css",
+    "minify": "sass --watch ./sass/main.scss --style compressed ./css/style.min.css"
   },
   "repository": {
     "type": "git",
