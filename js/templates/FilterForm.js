@@ -13,7 +13,7 @@ class FilterForm {
     this.filterWrapperulIng = document.querySelector("#ingredients");
     this.selectedFilters = document.querySelector(".selectedFilters ul");
     this.selectElt = document.querySelectorAll(".select-element");
-    // this.selectElt = document.querySelector(".select-element");
+
     this.filterWrapperulApp = document.querySelector("#appliance");
     this.filterWrapperulUst = document.querySelector("#ustensils");
     this.totalRecipes = document.querySelector(".filter-right p");
@@ -47,7 +47,7 @@ class FilterForm {
     dataSet.forEach((item) => {
       const liElt = document.createElement("li");
       liElt.textContent = item.toLowerCase();
-      liElt.setAttribute('data-id', index);
+      liElt.setAttribute("data-id", index);
       ulElement.appendChild(liElt);
       index++;
     });
@@ -185,9 +185,8 @@ class FilterForm {
   onClickRemoveEvent(ulElementWrapper, dataId) {
     // Ajouter un écouteur d'événements sur ulElementWrapper pour gérer les clics sur les boutons de suppression
     ulElementWrapper.addEventListener("click", (e) => {
-  
       if (e.target.tagName === "IMG") {
-        this.handleRemoveButtonClick(e.target, ulElementWrapper, dataId);
+        // this.handleRemoveButtonClick(e.target, ulElementWrapper, dataId);
       }
       // this.onClick(
       //   this.selectedFilters,
@@ -211,54 +210,85 @@ class FilterForm {
     this.parentSelected = target.parentNode;
     this.parentSelectedbro = this.parentSelected.previousElementSibling;
 
-    this.dataId = target.getAttribute('data-id');
+    this.dataId = target.getAttribute("data-id");
     this.addActiveFilterModel(
       this.parentSelectedbro,
-      `<li class="li-item removeFilter" data-id= ${this.dataId} id="${this.parentSelected.id}">${this.selectedItem}<span><img src="./assets/svg/mini-croix.svg" alt="croix"></span></span></li>`
+      `<li class="li-item removeFilter ${this.parentSelected.id}" data-id= ${this.parentSelected.id}-${this.dataId}>${this.selectedItem}<span><img class="delete" src="./assets/svg/mini-croix.svg" alt="croix"></span></span></li>`
     );
 
     // Création dans le filtre des sélections en dessous
-    ulElementWrapper.innerHTML += `<li class="btn-filter removeFilter" data-id= ${this.dataId}  id="${this.parentSelected.id}">${this.selectedItem}<span>
-        <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
+    ulElementWrapper.innerHTML += `<li class="btn-filter li-item removeFilter ${this.parentSelected.id}" data-id= ${this.parentSelected.id}-${this.dataId}>${this.selectedItem}<span>
+        <img class="delete" src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
     ulElementWrapper.classList.add("active");
 
-    this.removeActiveFilterModel(this.itemActive, this.paEltSelectItembro);
+     this.removeActiveFilterModel(this.itemActive, this.paEltSelectItembro);
 
     // Ajout dans un tableau qui permet de filtrer les recettes
     this.arrayFilter.push(this.selectedItem);
     this.filterSelection(this.recipes);
+    console.log(this.arrayFilter);
   }
 
-  handleRemoveButtonClick(target, ulElementWrapper, dataId) {
-    const btnFilterClosest = target.closest(".removeFilter");
+  // handleRemoveButtonClick(target, ulElementWrapper, dataId) {
+  //   const btnFilterClosest = target.closest(".removeFilter");
 
-    if (!btnFilterClosest) return; // Si le bouton de suppression n'est pas dans un élément .btn-filter, sortir
-    const removedText = btnFilterClosest.textContent.trim().toLowerCase();
-    
-  
-    // Supprimer l'élément de filtre parent de l'image cliquée
-    btnFilterClosest.remove();
+  //   if (!btnFilterClosest) return; // Si le bouton de suppression n'est pas dans un élément .btn-filter, sortir
+  //   const removedText = btnFilterClosest.textContent.trim().toLowerCase();
 
-    // Supprimer l'élément de la liste des filtres actifs
-    this.arrayFilter = this.arrayFilter.filter(
-      (element) => element !== removedText
-    );
+  //   // Supprimer l'élément de filtre parent de l'image cliquée
+  //   btnFilterClosest.remove();
 
-    // Si la liste des filtres est vide, afficher toutes les recettes et le rendu total
-    if (this.arrayFilter.length === 0) {
-      this.displayRecipes(this.recipes);
-      this.renderTotal(this.recipes);
-    }
+  //   // Supprimer l'élément de la liste des filtres actifs
+  //   this.arrayFilter = this.arrayFilter.filter(
+  //     (element) => element !== removedText
+  //   );
 
-    // Si la liste des filtres est vide, retirer la classe "active" de ulElementWrapper
-    if (ulElementWrapper.innerHTML === "") {
-      ulElementWrapper.classList.remove("active");
-    }
+  //   // Si la liste des filtres est vide, afficher toutes les recettes et le rendu total
+  //   if (this.arrayFilter.length === 0) {
+  //     this.displayRecipes(this.recipes);
+  //     this.renderTotal(this.recipes);
+  //   }
 
-    // Filtrer les recettes en fonction des filtres restants
-    this.filterSelection(this.recipes);
+  //   // Si la liste des filtres est vide, retirer la classe "active" de ulElementWrapper
+  //   if (ulElementWrapper.innerHTML === "") {
+  //     ulElementWrapper.classList.remove("active");
+  //   }
+
+  //   // Filtrer les recettes en fonction des filtres restants
+  //   this.filterSelection(this.recipes);
+  // }
+
+  onDelete() {
+    document.body.addEventListener("click", (e) => {
+      if (e.target.classList.contains("delete")) {
+        this.dataIdEvent =
+          e.target.parentNode.parentNode.getAttribute("data-id");
+        this.dataIdE = e.target.parentNode.parentNode;
+
+        const selectEltLi = document.querySelectorAll(".li-item");
+
+        selectEltLi.forEach((li) => {
+          if (li.getAttribute("data-id") === this.dataIdEvent) {
+            li.remove();
+            this.arrayFilter = this.arrayFilter.filter(
+              (element) => element !== li.textContent
+            );
+            // this.addActiveFilterModel(
+            //   this.selectElt,
+            //   `<li class="li-item  ${this.parentSelected.id}" data-id= ${this.parentSelected.id}-${this.dataId}>${this.selectedItem}<span><img class="delete" src="./assets/svg/mini-croix.svg" alt="croix"></span></span></li>`
+            // );
+          }
+        });
+        //  Filtrer les recettes en fonction des filtres restants
+        this.filterSelection(this.recipes);
+      }
+      if (this.arrayFilter.length === 0) {
+        this.displayRecipes(this.recipes);
+        this.renderTotal(this.recipes);
+        this.selectedFilters.classList.remove("active");
+      }
+    });
   }
-
 
   /**
    * Récupere le contenu des recettes et verifie les termes pour chaque filtre de sélection avec le terme selectionné.
@@ -366,6 +396,9 @@ class FilterForm {
     this.renderFilterModel(this.filterWrapperulUst, this.ustensils);
     //affichage du rendu de base des recettes
     this.renderTotal(this.recipes);
+
+
+
     // Déclenchement des methodes de filtres
     this.onClick(
       this.selectedFilters,
@@ -382,10 +415,10 @@ class FilterForm {
       document.querySelectorAll("#ustensils li"),
       this.filterWrapperulUst
     );
-    this.selectElt.forEach(element => {
+    this.selectElt.forEach((element) => {
       this.onClickRemoveEvent(element);
     });
-
+    this.onDelete();
     // Gestion des événements de filtrage pour chaque champ de recherche
     this.onSearch(this.inputs[0], this.ingredients, this.filterWrapperulIng);
     this.onSearch(this.inputs[1], this.appliances, this.filterWrapperulApp);
