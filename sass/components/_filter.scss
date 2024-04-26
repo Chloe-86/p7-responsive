@@ -21,7 +21,8 @@
   margin-bottom: 25px;
   background-color: $color-yellow;
 }
-.selectedFilters ul {
+
+.selectedFilters ul , .selectedFiltersFromSearch ul{
   margin-top: 21px;
   padding-bottom: 43px;
   display: none;
@@ -38,7 +39,7 @@
   }
 }
 
-.selectedFilters ul.active {
+.selectedFilters ul.active, .selectedFiltersFromSearch ul {
   display: block;
 }
 .filter-bar.selectedFilters.active {

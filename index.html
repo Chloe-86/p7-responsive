@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" >
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Les petits plats</title>
     <link
@@ -37,24 +37,20 @@
             délicieuses
           </h2>
           <form>
-            <div class="input-group">
+            <div class="input">
               <input
                 type="search"
                 class="form-control"
                 placeholder="Rechercher une recette, un ingrédient..."
               />
-              <div class="input-group-btn">
-                <span
-                  class="input-group-text border-0 bg-white"
-                  id="logo-research"
-                  ><span class="bg-dark rounded-5 p-2"
-                    ><img
-                      src="./assets/svg/logo-research.svg"
-                      alt="Logo"
-                      width="30"
-                      height="30" /></span
-                ></span>
-              </div>
+              <span id="logo-research"
+                ><img
+                  src="./assets/svg/logo-research.svg"
+                  alt="Logo"
+                  width="30"
+                  height="30"
+                />
+              </span>
             </div>
           </form>
         </div>
@@ -172,8 +168,10 @@
         <div class="selectedFilters">
           <ul></ul>
         </div>
-        <div class="container recipe row">
-        </div>
+        <!-- <div class="selectedFiltersFromSearch">
+          <ul></ul>
+        </div> -->
+        <div class="container recipe row"></div>
       </main>
     </div>
     <script
@@ -188,7 +186,5 @@
     <script src="./js/utils/Animation.js"></script>
     <script src="./js/templates/FilterForm.js"></script>
     <script src="./js/class/ModelRecipes.js"></script>
-
-   
   </body>
 </html>

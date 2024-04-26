@@ -85,12 +85,12 @@ main {
   background-color: #ffd15b;
 }
 
-.selectedFilters ul {
+.selectedFilters ul, .selectedFiltersFromSearch ul {
   margin-top: 21px;
   padding-bottom: 43px;
   display: none;
 }
-.selectedFilters ul li {
+.selectedFilters ul li, .selectedFiltersFromSearch ul li {
   display: inline-flex;
   padding: 17px 18px;
   align-items: center;
@@ -98,11 +98,11 @@ main {
   border-radius: 10px;
   background: #ffd15b;
 }
-.selectedFilters ul .active {
+.selectedFilters ul .active, .selectedFiltersFromSearch ul .active {
   display: block;
 }
 
-.selectedFilters ul.active {
+.selectedFilters ul.active, .selectedFiltersFromSearch ul {
   display: block;
 }
 
@@ -337,6 +337,10 @@ input:focus::placeholder {
 
 .input-group img {
   cursor: pointer;
+}
+
+.input {
+  display: flex;
 }
 
 header {

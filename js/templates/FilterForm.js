@@ -13,7 +13,6 @@ class FilterForm {
     this.filterWrapperulIng = document.querySelector("#ingredients");
     this.selectedFilters = document.querySelector(".selectedFilters ul");
     this.selectElt = document.querySelectorAll(".select-element");
-
     this.filterWrapperulApp = document.querySelector("#appliance");
     this.filterWrapperulUst = document.querySelector("#ustensils");
     this.totalRecipes = document.querySelector(".filter-right p");
@@ -24,7 +23,7 @@ class FilterForm {
     this.filteredIngredients = new Set();
     this.btnSearch = document.querySelector("span#logo-research");
     this.displayRecipes = modelRecipes.displayRecipes;
-    this.searchInput = document.querySelector(".input-group input");
+    this.searchInput = document.querySelector(".input");
     this.recipeFilterTemp = [];
     this.arrayFilter = [];
     this.count = 0;
@@ -102,7 +101,9 @@ class FilterForm {
    * @memberof FilterForm
    */
   compareResult() {
-    this.query = this.searchInput.value.trim().toLowerCase();
+    // this.query = this.searchInput.value;
+
+    // this.query.trim().toLowerCase()
     if (this.query.length >= 3) {
       // Filtrer les recettes en fonction de la recherche
       const filteredRecipes = this.recipes.filter((recipe) => {
@@ -179,22 +180,22 @@ class FilterForm {
       }
     });
 
-    this.onClickRemoveEvent(ulElementWrapper);
+    // this.onClickRemoveEvent(ulElementWrapper);
   }
 
-  onClickRemoveEvent(ulElementWrapper, dataId) {
-    // Ajouter un écouteur d'événements sur ulElementWrapper pour gérer les clics sur les boutons de suppression
-    ulElementWrapper.addEventListener("click", (e) => {
-      if (e.target.tagName === "IMG") {
-        // this.handleRemoveButtonClick(e.target, ulElementWrapper, dataId);
-      }
-      // this.onClick(
-      //   this.selectedFilters,
-      //   document.querySelectorAll("#ingredients li"),
-      //   this.filterWrapperulIng
-      // );
-    });
-  }
+  // onClickRemoveEvent(ulElementWrapper, dataId) {
+  //   // Ajouter un écouteur d'événements sur ulElementWrapper pour gérer les clics sur les boutons de suppression
+  //   ulElementWrapper.addEventListener("click", (e) => {
+  //     if (e.target.tagName === "IMG") {
+  //       //  this.handleRemoveButtonClick(e.target, ulElementWrapper, dataId);
+  //     }
+  //     // this.onClick(
+  //     //   this.selectedFilters,
+  //     //   document.querySelectorAll("#ingredients li"),
+  //     //   this.filterWrapperulIng
+  //     // );
+  //   });
+  // }
 
   handleFilterClick(target, ulElementWrapper) {
     this.itemActive = target;
@@ -221,12 +222,11 @@ class FilterForm {
         <img class="delete" src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
     ulElementWrapper.classList.add("active");
 
-     this.removeActiveFilterModel(this.itemActive, this.paEltSelectItembro);
+    this.removeActiveFilterModel(this.itemActive, this.paEltSelectItembro);
 
     // Ajout dans un tableau qui permet de filtrer les recettes
     this.arrayFilter.push(this.selectedItem);
     this.filterSelection(this.recipes);
-    console.log(this.arrayFilter);
   }
 
   // handleRemoveButtonClick(target, ulElementWrapper, dataId) {
@@ -257,7 +257,34 @@ class FilterForm {
   //   // Filtrer les recettes en fonction des filtres restants
   //   this.filterSelection(this.recipes);
   // }
+  onDeleteFromSearch(target) {
+    const btnFilterClosest = target.closest(".removeFilter");
 
+    if (!btnFilterClosest) return; // Si le bouton de suppression n'est pas dans un élément .btn-filter, sortir
+    const removedText = btnFilterClosest.textContent.trim().toLowerCase();
+
+    // Supprimer l'élément de filtre parent de l'image cliquée
+    btnFilterClosest.remove();
+
+    // // Supprimer l'élément de la liste des filtres actifs
+    // this.arrayFilter = this.arrayFilter.filter(
+    //   (element) => element !== removedText
+    // );
+
+    // // Si la liste des filtres est vide, afficher toutes les recettes et le rendu total
+    // if (this.arrayFilter.length === 0) {
+    //   this.displayRecipes(this.recipes);
+    //   this.renderTotal(this.recipes);
+    // }
+
+    // // Si la liste des filtres est vide, retirer la classe "active" de ulElementWrapper
+    // if (ulElementWrapper.innerHTML === "") {
+    //   ulElementWrapper.classList.remove("active");
+    // }
+
+    // // Filtrer les recettes en fonction des filtres restants
+    // this.filterSelection(this.recipes);
+  }
   onDelete() {
     document.body.addEventListener("click", (e) => {
       if (e.target.classList.contains("delete")) {
@@ -282,6 +309,7 @@ class FilterForm {
         //  Filtrer les recettes en fonction des filtres restants
         this.filterSelection(this.recipes);
       }
+
       if (this.arrayFilter.length === 0) {
         this.displayRecipes(this.recipes);
         this.renderTotal(this.recipes);
@@ -337,7 +365,7 @@ class FilterForm {
       const query = e.target.value.toLowerCase();
 
       // Lance la recherche si la longueur de la requête est supérieure ou égale à 1
-      if (query.length >= 1) {
+      if (query.length >= 3) {
         const filteredData = dataSet.filter((item) =>
           item.toLowerCase().includes(query)
         );
@@ -380,24 +408,12 @@ class FilterForm {
     // tableau d initialisation des datas
     this.initializeData();
 
-    this.searchInput.addEventListener("keyup", (e) => {
-      this.compareResult();
-    });
-
-    this.btnSearch.addEventListener("click", () => {
-      this.selectedFilters.innerHTML += `<li class="btn-filter">${this.query}<span>
-            <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
-      this.selectedFilters.classList.add("active");
-    });
-
     // déclaration des appels de rendu filtres
     this.renderFilterModel(this.filterWrapperulIng, this.ingredients);
     this.renderFilterModel(this.filterWrapperulApp, this.appliances);
     this.renderFilterModel(this.filterWrapperulUst, this.ustensils);
     //affichage du rendu de base des recettes
     this.renderTotal(this.recipes);
-
-
 
     // Déclenchement des methodes de filtres
     this.onClick(
@@ -415,10 +431,34 @@ class FilterForm {
       document.querySelectorAll("#ustensils li"),
       this.filterWrapperulUst
     );
-    this.selectElt.forEach((element) => {
-      this.onClickRemoveEvent(element);
-    });
+    // this.selectElt.forEach((element) => {
+    //   this.onClickRemoveEvent(element);
+    // });
     this.onDelete();
+
+    this.searchInput.addEventListener("keyup", (e) => {
+      this.query = `${e.target.value} `;
+      this.compareResult();
+    });
+
+    this.btnSearch.addEventListener("click", (e) => {
+      e.preventDefault();
+      this.selectedFilters.innerHTML += `<li class="btn-filter">${this.query}<span>
+            <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
+
+      this.selectedFilters.classList.add("active");
+      // this.arrayFilter = this.arrayFilter.filter(
+      //   (element) => element !== li.textContent
+      // );
+      //faire une correspondance avec les termes si il n est pas present ne pas pouvoir l 'ajouter
+      e.stopPropagation();
+      document
+        .querySelector("li.btn-filter span img")
+        .addEventListener("click", (e) => {
+          this.onDeleteFromSearch(e.target);
+        });
+    });
+
     // Gestion des événements de filtrage pour chaque champ de recherche
     this.onSearch(this.inputs[0], this.ingredients, this.filterWrapperulIng);
     this.onSearch(this.inputs[1], this.appliances, this.filterWrapperulApp);
