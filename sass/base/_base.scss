@@ -31,3 +31,9 @@ body {
 }
 
 
+/* Stylisation de l'ellipsis */
+.ellipsis {
+    overflow: hidden; /* Cache le contenu débordant */
+    text-overflow: ellipsis; /* Ajoute l'ellipsis (...) à la fin du texte */
+    white-space: nowrap; /* Empêche le texte de se répartir sur plusieurs lignes */
+}

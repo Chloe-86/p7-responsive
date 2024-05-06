@@ -1,10 +1,18 @@
+article.card:hover {
+  z-index: 100;
+}
 .card {
   border-radius: 21px;
   background: #fff;
   box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
-  // width: 380px;
-  .card-wrapper{
+  max-width: 380px;
+
+  .card-wrapper {
     margin: 32px 25px 61px;
+  }
+  .card-header-title {
+    font-size: clamp(18px, 16px, 14px);
+
   }
   .card-title {
     color: var(--Grey, #7a7a7a);
@@ -26,9 +34,23 @@
     line-height: normal;
     margin-bottom: 32px;
     height: 76px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+  .card-footer {
+    height: 190px;
     overflow: hidden;
   }
+
+  .card-text:hover {
+    scrollbar-width: unset;
+    cursor: grab;
+  }
+
   .d-flex {
+    .row {
+      width: 150px; /* Espace entre les colonnes */
+    }
     h4 {
       color: var(--Black, #1b1b1b);
       font-family: Manrope;
@@ -48,27 +70,12 @@
   }
   img.card-img-top {
     border-radius: 21px 21px 0 0;
-    max-height: 253px;
+    height: 253px;
     object-fit: cover;
   }
 }
 
-
-
-
-// test
-.card{
-  position: relative;
-  .d-flex .row {
-    width: 150px; /* Espace entre les colonnes */
-   }
-   .ingredients {
-    height: 170px;
-    overflow: hidden;
-   }
-}
-
-.time{
+.time {
   position: absolute;
   right: 20px;
   top: 21px;
@@ -81,8 +88,8 @@
 }
 
 
-// p.card-text:hover{
-//   height: unset;
-//   overflow: visible;
-//   cursor:pointer;
-// }
+@media screen and (max-width: 1440px) {
+  .card-footer:hover {
+    overflow-y: scroll;
+  }
+}

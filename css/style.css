@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::after,
 *::before {
@@ -27,9 +28,16 @@ body {
   min-height: 100vh;
 }
 
+/* Stylisation de l'ellipsis */
+.ellipsis {
+  overflow: hidden; /* Cache le contenu débordant */
+  text-overflow: ellipsis; /* Ajoute l'ellipsis (...) à la fin du texte */
+  white-space: nowrap; /* Empêche le texte de se répartir sur plusieurs lignes */
+}
+
 header {
   background-image: url(../../../assets/images/background-header.png);
-  height: clamp(400px, 15vh, 960px);
+  height: 667px;
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -37,13 +45,13 @@ header {
 }
 header h1 {
   position: absolute;
-  top: 2vw;
-  left: 4vh;
+  top: 35px;
+  left: 69px;
 }
 header h2 {
   color: #ffd15b;
   font-family: Anton;
-  font-size: clamp(16px, 4vw, 44px);
+  font-size: clamp(24px, 4vw, 44px);
   font-weight: 400;
   line-height: normal;
   text-transform: uppercase;
@@ -52,12 +60,103 @@ header .wrapper-header {
   max-width: 890px;
   height: 100%;
 }
+header .input {
+  position: relative;
+  display: flex;
+  height: 72px;
+  /* Masquer le placeholder au clic */
+}
+header .input :focus::placeholder {
+  color: transparent;
+}
+header .input .form-control[placeholder] {
+  padding-left: 32px;
+  color: #C6C6C6;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+header .input span#logo-research {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 12px;
+  z-index: 100;
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+header .input span#logo-research img {
+  width: 27px !important;
+  height: 28px !important;
+}
 
+@media screen and (max-width: 992px) {
+  header {
+    height: 460px;
+  }
+  header h1 {
+    padding: 20px;
+    top: 25px;
+    left: 19px;
+  }
+  header h2 {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  header .input {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .filtrerecipes {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+  .filter-right {
+    margin: 0 auto;
+    padding-top: 20px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  header {
+    height: 300px;
+  }
+  header h1 {
+    top: 15px !important;
+    left: 10px !important;
+  }
+  header h2 {
+    margin-top: 40px;
+    font-size: 20px;
+  }
+  header input.form-control.search {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 50px;
+  }
+  .filter-bar {
+    margin-bottom: 20px;
+  }
+}
 main {
   background: #EDEDED !important;
   padding: 20px 100px 201px;
 }
 
+@media screen and (max-width: 992px) {
+  main {
+    padding: 20px 50px 100px;
+  }
+  .recipe {
+    margin: 0 auto;
+  }
+}
 .select-box {
   display: flex;
   justify-content: space-between;
@@ -149,6 +248,7 @@ main {
 }
 
 .toggle {
+  font-size: 16px;
   text-align: center;
   display: inline-flex;
   padding: 17px 0;
@@ -183,6 +283,7 @@ main {
   width: 100%;
 }
 .filter-left input {
+  position: relative;
   margin-left: 16px;
   margin-right: 16px;
   height: 36px;
@@ -194,9 +295,13 @@ main {
   padding-left: unset;
 }
 .filter-left .filter-list-item {
+  cursor: grab;
   overflow-y: scroll;
   height: 260px;
   scrollbar-width: none;
+}
+.filter-left .filter-list-item:hover {
+  scrollbar-width: unset;
 }
 .filter-left li {
   list-style-type: none;
@@ -221,7 +326,7 @@ main {
 }
 .filter-left .dropdown-menu button img {
   position: absolute;
-  top: 25px;
+  top: 15px;
   right: 20px;
 }
 
@@ -234,13 +339,21 @@ main {
   line-height: normal;
 }
 
+article.card:hover {
+  z-index: 100;
+}
+
 .card {
   border-radius: 21px;
   background: #fff;
   box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+  max-width: 380px;
 }
 .card .card-wrapper {
   margin: 32px 25px 61px;
+}
+.card .card-header-title {
+  font-size: 18px;
 }
 .card .card-title {
   color: var(--Grey, #7a7a7a);
@@ -262,7 +375,19 @@ main {
   line-height: normal;
   margin-bottom: 32px;
   height: 76px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.card .card-footer {
+  height: 180px;
   overflow: hidden;
+}
+.card .card-text:hover {
+  scrollbar-width: unset;
+  cursor: grab;
+}
+.card .d-flex .row {
+  width: 150px; /* Espace entre les colonnes */
 }
 .card .d-flex h4 {
   color: var(--Black, #1b1b1b);
@@ -282,19 +407,8 @@ main {
 }
 .card img.card-img-top {
   border-radius: 21px 21px 0 0;
-  max-height: 253px;
+  height: 253px;
   object-fit: cover;
-}
-
-.card {
-  position: relative;
-}
-.card .d-flex .row {
-  width: 150px; /* Espace entre les colonnes */
-}
-.card .ingredients {
-  height: 170px;
-  overflow: hidden;
 }
 
 .time {
@@ -309,43 +423,14 @@ main {
   font-weight: 400;
 }
 
-.custom-search-bar {
-  height: 72px;
-  margin: 0 auto; /* Centers the search bar horizontally */
+@media screen and (max-width: 1440px) {
+  .card-footer:hover {
+    overflow-y: scroll;
+  }
 }
-.custom-search-bar .input-group-text {
-  background: #1B1B1B !important;
-}
-.custom-search-bar #logo-research > span {
-  border-radius: 10px !important;
-  padding: 12px !important;
-}
-
-.form-control[placeholder] {
-  color: #C6C6C6;
-  font-family: Manrope;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-/* Masquer le placeholder au clic */
-input:focus::placeholder {
-  color: transparent;
-}
-
-.input-group img {
-  cursor: pointer;
-}
-
-.input {
-  display: flex;
-}
-
 header {
   background-image: url(../../../assets/images/background-header.png);
-  height: clamp(400px, 15vh, 960px);
+  height: 667px;
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
@@ -353,13 +438,13 @@ header {
 }
 header h1 {
   position: absolute;
-  top: 2vw;
-  left: 4vh;
+  top: 35px;
+  left: 69px;
 }
 header h2 {
   color: #ffd15b;
   font-family: Anton;
-  font-size: clamp(16px, 4vw, 44px);
+  font-size: clamp(24px, 4vw, 44px);
   font-weight: 400;
   line-height: normal;
   text-transform: uppercase;
@@ -367,6 +452,90 @@ header h2 {
 header .wrapper-header {
   max-width: 890px;
   height: 100%;
+}
+header .input {
+  position: relative;
+  display: flex;
+  height: 72px;
+  /* Masquer le placeholder au clic */
+}
+header .input :focus::placeholder {
+  color: transparent;
+}
+header .input .form-control[placeholder] {
+  padding-left: 32px;
+  color: #C6C6C6;
+  font-family: Manrope;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+header .input span#logo-research {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 12px;
+  z-index: 100;
+  background-color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+header .input span#logo-research img {
+  width: 27px !important;
+  height: 28px !important;
+}
+
+@media screen and (max-width: 992px) {
+  header {
+    height: 460px;
+  }
+  header h1 {
+    padding: 20px;
+    top: 25px;
+    left: 19px;
+  }
+  header h2 {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  header .input {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .filtrerecipes {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+  .filter-right {
+    margin: 0 auto;
+    padding-top: 20px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  header {
+    height: 300px;
+  }
+  header h1 {
+    top: 15px !important;
+    left: 10px !important;
+  }
+  header h2 {
+    margin-top: 40px;
+    font-size: 20px;
+  }
+  header input.form-control.search {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-right: 50px;
+  }
+  .filter-bar {
+    margin-bottom: 20px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

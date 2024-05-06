@@ -83,6 +83,7 @@
   max-width: inherit;
 }
 .toggle {
+  font-size: 16px;
   text-align: center;
   display: inline-flex;
   padding: 17px 0;
@@ -118,6 +119,7 @@
     width: 100%;
   }
   input {
+    position: relative;
     margin-left: 16px;
     margin-right: 16px;
     height: 36px;
@@ -129,10 +131,13 @@
     padding-left: unset;
   }
   .filter-list-item{
-    
+    cursor: grab;
     overflow-y: scroll;
     height: 260px;
     scrollbar-width: none;
+  }
+  .filter-list-item:hover{
+    scrollbar-width:unset;
   }
   li {
     list-style-type: none;
@@ -148,10 +153,7 @@
   .dropdown-menu {
     border-radius: 11px;
     position: relative;
-    // height: 315px;
-    // overflow: hidden;
-
-
+    
     .filterListItems{
       height: 100%;
       overflow-y: auto;
@@ -161,7 +163,7 @@
     }
     button img {
       position: absolute;
-      top: 25px;
+      top: 15px;
       right: 20px;
     }
   }

@@ -1,5 +1,13 @@
 main{
-
     background: $color-background!important;
     padding: 20px 100px 201px;
+}
+@media screen and (max-width: 992px) {
+    main{
+        padding: 20px 50px 100px;
+       
+}
+.recipe{
+    margin: 0 auto;
+}
 }

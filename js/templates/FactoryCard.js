@@ -30,7 +30,7 @@ class FactoryCard {
    */
   createDivCol() {
     const div = document.createElement("div");
-    div.classList.add("col-lg-4", "mb-5");
+    div.classList.add("col-lg-4",  "col-md-6","col-sm-12", "mb-5","d-flex", "justify-content-center");
     return div;
   }
   /**

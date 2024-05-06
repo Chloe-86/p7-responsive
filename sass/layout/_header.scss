@@ -1,53 +1,112 @@
-// .header {
-//     background: $colour-primary;
-//     height: 10rem;
-//     display: flex;
-//     align-items: center;
-//     flex-wrap: wrap;
-//     width: 100%;
-//     &__logo {
-//         font-size: 7rem;
-//         color: $colour-secondary;
-//         margin-left: 10rem;
-//         @include heading-shadow($colour-white);
-//     }
-// }
-
 header {
   background-image: url(../../../assets/images/background-header.png);
-  height:clamp(400px, 15vh, 960px);
+  height: 667px;
+
   background-size: cover;
   background-repeat: no-repeat;
   overflow: hidden;
   position: relative;
 
-  h1{
-  // padding-left: 2vw;
-  // padding-top: 2vh;
-  position: absolute;
-  top: 2vw;
-  left: 4vh;
+  h1 {
+    position: absolute;
+    top: 35px;
+    left: 69px;
   }
   h2 {
-    // margin-top: 10%;
-    
-    // margin: 10% auto;
     color: $color-yellow;
-    // text-align: center;
     font-family: Anton;
-    font-size: clamp(16px, 4vw, 44px);
-    // font-style: normal;
+    font-size: clamp(24px, 4vw, 44px);
     font-weight: 400;
     line-height: normal;
     text-transform: uppercase;
-    // @include flex;
   }
-.wrapper-header{
-  max-width: 890px;
-  height: 100%;
-}
-  // .header-text {
-  //   max-width: 890px;
+  .wrapper-header {
+    max-width: 890px;
+    height: 100%;
+  }
+  .input {
+    position: relative;
+    display: flex;
+    height: 72px;
 
-  // }
+    /* Masquer le placeholder au clic */
+    :focus::placeholder {
+      color: transparent;
+    }
+    .form-control[placeholder] {
+      padding-left: 32px;
+      color: $color-lightgrey;
+      font-family: Manrope;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+    span#logo-research {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 12px;
+      z-index: 100;
+      background-color: black;
+      border-radius: 5px;
+      cursor: pointer;
+      img {
+        width: 27px !important;
+        height: 28px !important;
+      }
+    }
+  }
+}
+@media screen and (max-width: 992px) {
+  header {
+    height: 460px;
+    h1 {
+      padding: 20px;
+      top: 25px;
+      left: 19px;
+    }
+    h2 {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    .input {
+      margin-left: 30px;
+      margin-right: 30px;
+    }
+  }
+  .filtrerecipes {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+  .filter-right {
+    margin: 0 auto;
+    padding-top: 20px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    height: 300px;
+    h1 {
+      top: 15px !important;
+      left: 10px !important;
+    }
+    h2 {
+      margin-top: 40px;
+      font-size: 20px;
+    }
+    input.form-control.search {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-right: 50px;
+    }
+  }
+  .filter-bar {
+    margin-bottom: 20px;
+  }
 }

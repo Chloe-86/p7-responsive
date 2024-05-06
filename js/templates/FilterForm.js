@@ -29,9 +29,6 @@ class FilterForm {
     this.count = 0;
     this.inputError;
     this.selectError;
-    // this.ingLi = document.querySelectorAll("#ingredients li");
-    // this.ustLi = document.querySelectorAll("#appliance li");
-    // this.AppLi = document.querySelectorAll("#ustensils li");
   }
 
   /**
@@ -75,7 +72,7 @@ class FilterForm {
     let message2 = "";
     if (error === "inputError") {
       // Cas où aucun résultat n'est trouvé pour la recherche utilisateur
-      message = `<h2 class="m-4">Aucune recette ne contient "${this.query}".</h2>`;
+      message = `<h2 class="m-4 errorRecipe">Aucune recette ne contient "${this.query}".</h2>`;
       message2 = `Vous pouvez chercher « tarte aux pommes », « poisson ».`;
     } else if (error === "selectError") {
       // Cas où aucun résultat n'est trouvé pour les filtres sélectionnés
@@ -101,9 +98,6 @@ class FilterForm {
    * @memberof FilterForm
    */
   compareResult() {
-    // this.query = this.searchInput.value;
-
-    // this.query.trim().toLowerCase()
     if (this.query.length >= 3) {
       // Filtrer les recettes en fonction de la recherche
       const filteredRecipes = this.recipes.filter((recipe) => {
@@ -145,19 +139,30 @@ class FilterForm {
    * @memberof FilterForm
    */
   initializeData() {
-    this.recipes.forEach((recipe) => {
-      recipe.ingredients.forEach((ingredientObj) => {
+    // Initialiser les ensembles
+    for (let recipe of this.recipes) {
+      for (let ingredientObj of recipe.ingredients) {
         this.ingredientsSet.add(ingredientObj.ingredient.toLowerCase());
-      });
+      }
       this.applianceSet.add(recipe.appliance.toLowerCase());
-      recipe.ustensils.forEach((ustensil) => {
+      for (let ustensil of recipe.ustensils) {
         this.ustensilsSet.add(ustensil.toLowerCase());
-      });
-    });
-    // Convertir les ensembles en tableaux pour permettre l'itération et l'accès facile
-    this.ingredients = Array.from(this.ingredientsSet);
-    this.appliances = Array.from(this.applianceSet);
-    this.ustensils = Array.from(this.ustensilsSet);
+      }
+    }
+
+    // Convertir les ensembles en tableaux
+    this.ingredients = [];
+    for (let ingredient of this.ingredientsSet) {
+      this.ingredients.push(ingredient);
+    }
+    this.appliances = [];
+    for (let appliance of this.applianceSet) {
+      this.appliances.push(appliance);
+    }
+    this.ustensils = [];
+    for (let ustensil of this.ustensilsSet) {
+      this.ustensils.push(ustensil);
+    }
   }
 
   /**
@@ -179,23 +184,7 @@ class FilterForm {
         this.handleFilterClick(e.target, ulElementWrapper);
       }
     });
-
-    // this.onClickRemoveEvent(ulElementWrapper);
   }
-
-  // onClickRemoveEvent(ulElementWrapper, dataId) {
-  //   // Ajouter un écouteur d'événements sur ulElementWrapper pour gérer les clics sur les boutons de suppression
-  //   ulElementWrapper.addEventListener("click", (e) => {
-  //     if (e.target.tagName === "IMG") {
-  //       //  this.handleRemoveButtonClick(e.target, ulElementWrapper, dataId);
-  //     }
-  //     // this.onClick(
-  //     //   this.selectedFilters,
-  //     //   document.querySelectorAll("#ingredients li"),
-  //     //   this.filterWrapperulIng
-  //     // );
-  //   });
-  // }
 
   handleFilterClick(target, ulElementWrapper) {
     this.itemActive = target;
@@ -229,62 +218,12 @@ class FilterForm {
     this.filterSelection(this.recipes);
   }
 
-  // handleRemoveButtonClick(target, ulElementWrapper, dataId) {
-  //   const btnFilterClosest = target.closest(".removeFilter");
-
-  //   if (!btnFilterClosest) return; // Si le bouton de suppression n'est pas dans un élément .btn-filter, sortir
-  //   const removedText = btnFilterClosest.textContent.trim().toLowerCase();
-
-  //   // Supprimer l'élément de filtre parent de l'image cliquée
-  //   btnFilterClosest.remove();
-
-  //   // Supprimer l'élément de la liste des filtres actifs
-  //   this.arrayFilter = this.arrayFilter.filter(
-  //     (element) => element !== removedText
-  //   );
-
-  //   // Si la liste des filtres est vide, afficher toutes les recettes et le rendu total
-  //   if (this.arrayFilter.length === 0) {
-  //     this.displayRecipes(this.recipes);
-  //     this.renderTotal(this.recipes);
-  //   }
-
-  //   // Si la liste des filtres est vide, retirer la classe "active" de ulElementWrapper
-  //   if (ulElementWrapper.innerHTML === "") {
-  //     ulElementWrapper.classList.remove("active");
-  //   }
-
-  //   // Filtrer les recettes en fonction des filtres restants
-  //   this.filterSelection(this.recipes);
-  // }
   onDeleteFromSearch(target) {
-    const btnFilterClosest = target.closest(".removeFilter");
-
-    if (!btnFilterClosest) return; // Si le bouton de suppression n'est pas dans un élément .btn-filter, sortir
-    const removedText = btnFilterClosest.textContent.trim().toLowerCase();
-
-    // Supprimer l'élément de filtre parent de l'image cliquée
+    const btnFilterClosest = target.closest(".removeFromSearch");
+    // // Supprimer l'élément de filtre parent de l'image cliquée
     btnFilterClosest.remove();
-
-    // // Supprimer l'élément de la liste des filtres actifs
-    // this.arrayFilter = this.arrayFilter.filter(
-    //   (element) => element !== removedText
-    // );
-
-    // // Si la liste des filtres est vide, afficher toutes les recettes et le rendu total
-    // if (this.arrayFilter.length === 0) {
-    //   this.displayRecipes(this.recipes);
-    //   this.renderTotal(this.recipes);
-    // }
-
-    // // Si la liste des filtres est vide, retirer la classe "active" de ulElementWrapper
-    // if (ulElementWrapper.innerHTML === "") {
-    //   ulElementWrapper.classList.remove("active");
-    // }
-
-    // // Filtrer les recettes en fonction des filtres restants
-    // this.filterSelection(this.recipes);
   }
+
   onDelete() {
     document.body.addEventListener("click", (e) => {
       if (e.target.classList.contains("delete")) {
@@ -300,16 +239,11 @@ class FilterForm {
             this.arrayFilter = this.arrayFilter.filter(
               (element) => element !== li.textContent
             );
-            // this.addActiveFilterModel(
-            //   this.selectElt,
-            //   `<li class="li-item  ${this.parentSelected.id}" data-id= ${this.parentSelected.id}-${this.dataId}>${this.selectedItem}<span><img class="delete" src="./assets/svg/mini-croix.svg" alt="croix"></span></span></li>`
-            // );
           }
         });
         //  Filtrer les recettes en fonction des filtres restants
         this.filterSelection(this.recipes);
       }
-
       if (this.arrayFilter.length === 0) {
         this.displayRecipes(this.recipes);
         this.renderTotal(this.recipes);
@@ -324,31 +258,45 @@ class FilterForm {
    */
 
   filterSelection() {
-    this.recipesFiltered = this.recipes.filter((recipe) => {
-      // Vérifier si chaque filtre est présent dans la recette
-      const match = this.arrayFilter.every(
-        (filter) =>
-          recipe.ingredients.some((ingredient) =>
-            ingredient.ingredient.toLowerCase().includes(filter.toLowerCase())
-          ) ||
-          recipe.ustensils.some((ustensil) =>
-            ustensil.toLowerCase().includes(filter.toLowerCase())
-          ) ||
-          recipe.appliance.toLowerCase().includes(filter.toLowerCase())
-      );
+    const filteredRecipes = [];
 
-      // Retourner true si tous les filtres sont présents dans la recette
-      return match;
-    });
+    for (let i = 0; i < this.recipes.length; i++) {
+      const recipe = this.recipes[i];
+      let match = true;
 
-    // Si aucune recette ne correspond aux filtres, afficher un message d'erreur
-    if (this.recipesFiltered.length === 0) {
+      for (let j = 0; j < this.arrayFilter.length; j++) {
+        const filter = this.arrayFilter[j].toLowerCase();
+        const ingredients = recipe.ingredients.map((ingredient) =>
+          ingredient.ingredient.toLowerCase()
+        );
+        const ustensils = recipe.ustensils.map((ustensil) =>
+          ustensil.toLowerCase()
+        );
+        const appliance = recipe.appliance.toLowerCase();
+
+        if (
+          !(
+            ingredients.some((ingredient) => ingredient.includes(filter)) ||
+            ustensils.some((ustensil) => ustensil.includes(filter)) ||
+            appliance.includes(filter)
+          )
+        ) {
+          match = false;
+          break;
+        }
+      }
+
+      if (match) {
+        filteredRecipes.push(recipe);
+      }
+    }
+
+    if (filteredRecipes.length === 0) {
       this.errorMessage("selectError");
-      this.renderTotal(this.recipesFiltered);
+      this.renderTotal(filteredRecipes);
     } else {
-      // Afficher les recettes filtrées et mettre à jour le total
-      this.displayRecipes(this.recipesFiltered);
-      this.renderTotal(this.recipesFiltered);
+      this.displayRecipes(filteredRecipes);
+      this.renderTotal(filteredRecipes);
     }
   }
 
@@ -379,6 +327,24 @@ class FilterForm {
     });
   }
 
+  onSearchAdd() {
+    this.errorDisplay = document.querySelector(".recipe h2");
+    if (!this.errorDisplay.classList.contains("errorRecipe")) {
+      this.selectedFilters.innerHTML += `<li class="btn-filter removeFromSearch">${this.query}<span>
+        <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
+      this.selectedFilters.classList.add("active");
+    }
+  }
+
+  onSearchDelete() {
+    if (!this.errorDisplay.classList.contains("errorRecipe")) {
+      document
+        .querySelector("li.btn-filter span img")
+        .addEventListener("click", (e) => {
+          this.onDeleteFromSearch(e.target);
+        });
+    }
+  }
   /**
    * Cette méthode met à jour l'affichage du nombre total de recettes dans l'interface utilisateur.
    *
@@ -431,9 +397,6 @@ class FilterForm {
       document.querySelectorAll("#ustensils li"),
       this.filterWrapperulUst
     );
-    // this.selectElt.forEach((element) => {
-    //   this.onClickRemoveEvent(element);
-    // });
     this.onDelete();
 
     this.searchInput.addEventListener("keyup", (e) => {
@@ -443,20 +406,10 @@ class FilterForm {
 
     this.btnSearch.addEventListener("click", (e) => {
       e.preventDefault();
-      this.selectedFilters.innerHTML += `<li class="btn-filter">${this.query}<span>
-            <img src="./assets/svg/close-btn.svg" alt="croix"></span></li>`;
-
-      this.selectedFilters.classList.add("active");
-      // this.arrayFilter = this.arrayFilter.filter(
-      //   (element) => element !== li.textContent
-      // );
-      //faire une correspondance avec les termes si il n est pas present ne pas pouvoir l 'ajouter
+      this.onSearchAdd();
+      this.onSearchDelete();
+      this.compareResult();
       e.stopPropagation();
-      document
-        .querySelector("li.btn-filter span img")
-        .addEventListener("click", (e) => {
-          this.onDeleteFromSearch(e.target);
-        });
     });
 
     // Gestion des événements de filtrage pour chaque champ de recherche
